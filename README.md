@@ -6,7 +6,7 @@ Para acessar a versão em inglês, por favor clique aqui: [README.md](README.md)
 
 ## **Sobre**
 
-O programa PET Services é desenvolvido por alunos da **Universidade Federal de Santa Maria**, do curso de **Sistemas de Informação**, integrantes do **Programa de Ensino Tutorial (PET)**, com o time de desenvolvimento originalmente composto por Amanda Siebeneichler, Mateus Cardoso, Gabriel Saueressig e Michel Altmann.
+O programa PET Services é desenvolvido por alunos da **Universidade Federal de Santa Maria**, do curso de **Sistemas de Informação**, integrantes do **Programa de Ensino Tutorial (PET)**, com o time de desenvolvimento originalmente composto por Amanda Siebeneichler, Gabriel Saueressig, Mateus Cardoso e Michel Altmann.
 
 A proposta de desenvolvimento de software trata-se de um sistema de gerenciamento para pequenos negócios locais e prestadores de serviço de Santa Maria. O software deve ser desenvolvido de forma incremental, com o apoio de empreendedores participantes da pesquisa de mercado.
 
