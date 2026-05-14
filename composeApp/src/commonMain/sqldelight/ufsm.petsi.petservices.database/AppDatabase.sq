@@ -5,13 +5,17 @@ CREATE TABLE IF NOT EXISTS user (
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     companyName TEXT NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS report (
     idReport TEXT PRIMARY KEY NOT NULL,
     filePath TEXT NOT NULL,
-    date TEXT NOT NULL
+    date TEXT NOT NULL,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS settings (
@@ -20,8 +24,7 @@ CREATE TABLE IF NOT EXISTS settings (
 );
 
 CREATE TABLE IF NOT EXISTS sincronization (
-    tableName TEXT NOT NULL UNIQUE,
-    lastUpdate TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updatesTimeStamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS expense (
@@ -29,7 +32,9 @@ CREATE TABLE IF NOT EXISTS expense (
     name TEXT NOT NULL,
     amount REAL NOT NULL,
     date TEXT NOT NULL,
-    category TEXT NOT NULL
+    category TEXT NOT NULL,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS client (
@@ -38,13 +43,17 @@ CREATE TABLE IF NOT EXISTS client (
     cpf TEXT UNIQUE,
     email TEXT  UNIQUE,
     phoneNumber TEXT,
-    points INTEGER DEFAULT 0
+    points INTEGER DEFAULT 0,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS purchaseOrder (
     idPurchaseOrder TEXT PRIMARY KEY NOT NULL,
     idClient TEXT NOT NULL,
     date TEXT NOT NULL,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     FOREIGN KEY (idClient) REFERENCES client(idClient)
 );
@@ -56,13 +65,17 @@ CREATE TABLE IF NOT EXISTS product (
     costPrice REAL NOT NULL,
     salePrice REAL NOT NULL,
     minimunStock INTEGER DEFAULT 0,
-    soldQuantity INTEGER DEFAULT 0
+    soldQuantity INTEGER DEFAULT 0,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS purchaseOrder_Products (
     idPurchaseOrder TEXT NOT NULL,
     idProduct TEXT NOT NULL,
     quantity INTEGER DEFAULT 1,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     PRIMARY KEY (idPurchaseOrder, idProduct),
     FOREIGN KEY (idPurchaseOrder) REFERENCES purchaseOrder(idPurchaseOrder),
@@ -75,13 +88,17 @@ CREATE TABLE IF NOT EXISTS material (
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
     minimunStock INTEGER DEFAULT 0,
-    metric TEXT NOT NULL
+    metric TEXT NOT NULL,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS product_materials (
     idProduct TEXT NOT NULL,
     idMaterial TEXT NOT NULL,
     quantity REAL NOT NULL,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     PRIMARY KEY (idProduct, idMaterial),
     FOREIGN KEY (idProduct) REFERENCES product(idProduct),

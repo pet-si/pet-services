@@ -1,0 +1,43 @@
+insertUser:
+INSERT OR REPLACE INTO user (idUser, name, email, companyName, password, updatedAt, deleted)
+VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertReport:
+INSERT OR REPLACE INTO report (idReport, filePath, date, updatedAt, deleted)
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertExpense:
+INSERT OR REPLACE INTO expense (idExpense, name, amount, date, category, updatedAt, deleted)
+VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertClient:
+INSERT OR REPLACE INTO client (idClient, name, cpf, email, phoneNumber, points, updatedAt, deleted)
+VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertPurchaseOrder:
+INSERT OR REPLACE INTO purchaseOrder (idPurchaseOrder, idClient, date, updatedAt, deleted)
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertProduct:
+INSERT OR REPLACE INTO product (idProduct, name, quantity, costPrice, salePrice, minimunStock, soldQuantity, updatedAt, deleted)
+VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertMaterial:
+INSERT OR REPLACE INTO material (idMaterial, name, quantity, costPrice, minimunStock, metric, updatedAt, deleted)
+VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertPurchaseOrderProduct:
+INSERT OR REPLACE INTO purchaseOrder_Products (idPurchaseOrder, idProduct, quantity, updatedAt, deleted)
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertProductMaterial:
+INSERT OR REPLACE INTO product_materials (idProduct, idMaterial, quantity, updatedAt, deleted)
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?);
+
+insertSetting:
+INSERT OR REPLACE INTO settings (settingName, value)
+VALUES (?, ?);
+
+insertSincronization:
+INSERT OR REPLACE INTO sincronization (updatesTimeStamp)
+VALUES (CURRENT_TIMESTAMP);
