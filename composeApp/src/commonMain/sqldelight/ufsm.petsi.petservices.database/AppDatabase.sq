@@ -1,7 +1,7 @@
-import java.lang.Boolean;
+import kotlin.Boolean;
 
 CREATE TABLE IF NOT EXISTS user (
-    idUser INTEGER PRIMARY KEY AUTOINCREMENT,
+    idUser TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     companyName TEXT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS user (
 );
 
 CREATE TABLE IF NOT EXISTS report (
-    idReport INTEGER PRIMARY KEY AUTOINCREMENT,
+    idReport TEXT PRIMARY KEY NOT NULL,
     filePath TEXT NOT NULL,
     date TEXT NOT NULL
 );
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS sincronization (
 );
 
 CREATE TABLE IF NOT EXISTS expense (
-    idExpense INTEGER PRIMARY KEY AUTOINCREMENT,
+    idExpense TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     amount REAL NOT NULL,
     date TEXT NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS expense (
 );
 
 CREATE TABLE IF NOT EXISTS client (
-    idClient INTEGER PRIMARY KEY AUTOINCREMENT,
+    idClient TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     cpf TEXT UNIQUE,
     email TEXT  UNIQUE,
@@ -42,15 +42,15 @@ CREATE TABLE IF NOT EXISTS client (
 );
 
 CREATE TABLE IF NOT EXISTS purchaseOrder (
-    idPurchaseOrder INTEGER PRIMARY KEY AUTOINCREMENT,
-    idClient INTEGER NOT NULL,
+    idPurchaseOrder TEXT PRIMARY KEY NOT NULL,
+    idClient TEXT NOT NULL,
     date TEXT NOT NULL,
 
     FOREIGN KEY (idClient) REFERENCES client(idClient)
 );
 
 CREATE TABLE IF NOT EXISTS product (
-    idProduct INTEGER PRIMARY KEY AUTOINCREMENT,
+    idProduct TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS product (
 );
 
 CREATE TABLE IF NOT EXISTS purchaseOrder_Products (
-    idPurchaseOrder INTEGER NOT NULL,
-    idProduct INTEGER NOT NULL,
+    idPurchaseOrder TEXT NOT NULL,
+    idProduct TEXT NOT NULL,
     quantity INTEGER DEFAULT 1,
 
     PRIMARY KEY (idPurchaseOrder, idProduct),
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS purchaseOrder_Products (
 );
 
 CREATE TABLE IF NOT EXISTS material (
-    idMaterial INTEGER PRIMARY KEY AUTOINCREMENT,
+    idMaterial TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS material (
 );
 
 CREATE TABLE IF NOT EXISTS product_materials (
-    idProduct INTEGER NOT NULL,
-    idMaterial INTEGER NOT NULL,
+    idProduct TEXT NOT NULL,
+    idMaterial TEXT NOT NULL,
     quantity REAL NOT NULL,
 
     PRIMARY KEY (idProduct, idMaterial),
