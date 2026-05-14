@@ -39,3 +39,10 @@ A primeira etapa desenvolvida com o público foi a pesquisa de mercado, com o ob
 **Modelo de desenvolvimento:** Incremental com foco em código limpo, revisão e refatoração
 
 **Escrita:** Além dos padrões convencionais, optou-se por utilizar camelCase para frontend e snake_case para o banco de dados; o idioma escolhido foi inglês; a forma de identação segue uma separação visual por blocos lógicos.
+
+---
+
+## 2 versões de desenvolvimento
+
+- Uma versão app, que compile para desktop e mobile, e que sincronize as vezes com o google sheets que servirá como backup (kotlin)
+- Uma versão web, com o google sheets + apps script (uma solução simples, para atender os usuários de iphone e se alguém quiser usar de forma remota)
