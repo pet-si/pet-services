@@ -1,0 +1,26 @@
+selectAllUsers:
+SELECT * FROM user WHERE deleted = 0;
+
+selectAllReports:
+SELECT * FROM report WHERE deleted = 0;
+
+selectAllExpenses:
+SELECT * FROM expense WHERE deleted = 0;
+
+selectAllClients:
+SELECT * FROM client WHERE deleted = 0;
+
+selectAllPurchaseOrders:
+SELECT * FROM purchaseOrder WHERE deleted = 0;
+
+selectAllProducts:
+SELECT * FROM product WHERE deleted = 0;
+
+selectAllMaterials:
+SELECT * FROM material WHERE deleted = 0;
+
+selectAllProductMaterials:
+SELECT * FROM product_materials WHERE deleted = 0;
+
+selectAllPurchaseOrderProducts:
+SELECT * FROM purchaseOrder_Products WHERE deleted = 0;
