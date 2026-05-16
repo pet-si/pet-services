@@ -20,7 +20,7 @@ class SqlDelightUserRepository( database: AppDatabase) : UserRepository {
     override fun getUser(): Flow<User?> {
         return selectQueries.selectAllUsers()
             .asFlow()
-            .mapToOneOrNull(Dispatchers.Default)
+            .mapToOneOrNull(Dispatchers.IO)
             .map { entity ->
                 entity?.toModel()
             }

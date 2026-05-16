@@ -11,7 +11,7 @@ data class Product(
     val quantity: Int = 0,
     val costPrice: Double,
     val salePrice: Double,
-    val minimunStock: Int = 0,
+    val minimumStock: Int = 0,
     val soldQuantity: Int = 0,
     val updatedAt: Instant = Clock.System.now(),
     val deleted: Boolean = false

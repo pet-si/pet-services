@@ -19,11 +19,11 @@ INSERT OR REPLACE INTO purchaseOrder (idPurchaseOrder, idClient, date, updatedAt
 VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?);
 
 insertProduct:
-INSERT OR REPLACE INTO product (idProduct, name, quantity, costPrice, salePrice, minimunStock, soldQuantity, updatedAt, deleted)
+INSERT OR REPLACE INTO product (idProduct, name, quantity, costPrice, salePrice, minimumStock, soldQuantity, updatedAt, deleted)
 VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
 
 insertMaterial:
-INSERT OR REPLACE INTO material (idMaterial, name, quantity, costPrice, minimunStock, metric, updatedAt, deleted)
+INSERT OR REPLACE INTO material (idMaterial, name, quantity, costPrice, minimumStock, metric, updatedAt, deleted)
 VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?);
 
 insertPurchaseOrderProduct:

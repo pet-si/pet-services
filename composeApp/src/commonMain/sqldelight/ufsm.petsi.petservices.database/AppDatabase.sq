@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS product (
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
     salePrice REAL NOT NULL,
-    minimunStock INTEGER DEFAULT 0,
+    minimumStock INTEGER DEFAULT 0,
     soldQuantity INTEGER DEFAULT 0,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS material (
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
-    minimunStock INTEGER DEFAULT 0,
+    minimumStock INTEGER DEFAULT 0,
     metric TEXT NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
