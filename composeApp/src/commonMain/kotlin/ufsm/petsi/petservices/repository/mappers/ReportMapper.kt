@@ -1,5 +1,3 @@
 package ufsm.petsi.petservices.repository.mappers
 
-import ufsm.petsi.petservices.models.Report
-import kotlinx.datetime.Instant
-import ufsmpetsipetservicesdatabase.Report as ReportEntity
+import ufsm.petsi.petservices.database.Report as ReportEntity
