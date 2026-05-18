@@ -1,0 +1,43 @@
+insertUser:
+INSERT OR REPLACE INTO userEntity (idUser, name, email, companyName, password)
+VALUES (?, ?, ?, ?, ?);
+
+insertReport:
+INSERT OR REPLACE INTO reportEntity (idReport, filePath, date)
+VALUES (?, ?, ?);
+
+insertExpense:
+INSERT OR REPLACE INTO expenseEntity (idExpense, name, amount, date, category)
+VALUES (?, ?, ?, ?, ?);
+
+insertClient:
+INSERT OR REPLACE INTO clientEntity (idClient, name, cpf, email, phoneNumber, points)
+VALUES (?, ?, ?, ?, ?, ?);
+
+insertPurchaseOrder:
+INSERT OR REPLACE INTO purchaseOrderEntity (idPurchaseOrder, idClient, date)
+VALUES (?, ?, ?);
+
+insertProduct:
+INSERT OR REPLACE INTO productEntity (idProduct, name, quantity, costPrice, salePrice, minimumStock, soldQuantity)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+insertMaterial:
+INSERT OR REPLACE INTO materialEntity (idMaterial, name, quantity, costPrice, minimumStock, metric)
+VALUES (?, ?, ?, ?, ?, ?);
+
+insertPurchaseOrderProduct:
+INSERT OR REPLACE INTO purchaseOrder_ProductsEntity (idPurchaseOrder, idProduct, quantity)
+VALUES (?, ?, ?);
+
+insertProductMaterial:
+INSERT OR REPLACE INTO product_materialsEntity (idProduct, idMaterial, quantity)
+VALUES (?, ?, ?);
+
+insertSetting:
+INSERT OR REPLACE INTO settingsEntity (settingName, value)
+VALUES (?, ?);
+
+insertSincronization:
+INSERT OR REPLACE INTO sincronizationEntity (updatesTimeStamp)
+VALUES (CURRENT_TIMESTAMP);

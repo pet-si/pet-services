@@ -1,0 +1,26 @@
+selectUsersAfter:
+SELECT * FROM userEntity WHERE updatedAt > ?;
+
+selectReportsAfter:
+SELECT * FROM reportEntity WHERE updatedAt > ?;
+
+selectExpensesAfter:
+SELECT * FROM expenseEntity WHERE updatedAt > ?;
+
+selectClientsAfter:
+SELECT * FROM clientEntity WHERE updatedAt > ?;
+
+selectPurchaseOrdersAfter:
+SELECT * FROM purchaseOrderEntity WHERE updatedAt > ?;
+
+selectProductsAfter:
+SELECT * FROM productEntity WHERE updatedAt > ?;
+
+selectMaterialsAfter:
+SELECT * FROM materialEntity WHERE updatedAt > ?;
+
+selectProductMaterialsAfter:
+SELECT * FROM product_materialsEntity WHERE updatedAt > ?;
+
+selectPurchaseOrderProductsAfter:
+SELECT * FROM purchaseOrder_ProductsEntity WHERE updatedAt > ?;

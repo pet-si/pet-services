@@ -39,6 +39,7 @@ kotlin {
             // Banco de dados
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines.extensions)
+            implementation(libs.kotlinx.datetime)
 
             // Injeção de dependencia
             implementation(libs.koin.core)

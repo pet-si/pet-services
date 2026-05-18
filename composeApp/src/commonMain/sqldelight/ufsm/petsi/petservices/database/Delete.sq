@@ -1,0 +1,26 @@
+softDeleteUser:
+UPDATE userEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idUser = ?;
+
+softDeleteReport:
+UPDATE reportEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idReport = ?;
+
+softDeleteExpense:
+UPDATE expenseEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idExpense = ?;
+
+softDeleteClient:
+UPDATE clientEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idClient = ?;
+
+softDeletePurchaseOrder:
+UPDATE purchaseOrderEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idPurchaseOrder = ?;
+
+softDeleteProduct:
+UPDATE productEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idProduct = ?;
+
+softDeleteMaterial:
+UPDATE materialEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idMaterial = ?;
+
+softDeleteProductMaterial:
+UPDATE product_materialsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idProduct = ? AND idMaterial = ?;
+
+softDeletePurchaseOrderProduct:
+UPDATE purchaseOrder_ProductsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idPurchaseOrder = ? AND idProduct = ?;

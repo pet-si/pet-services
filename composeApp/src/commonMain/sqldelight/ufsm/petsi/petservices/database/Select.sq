@@ -1,0 +1,29 @@
+selectAllUsers:
+SELECT * FROM userEntity WHERE deleted = 0;
+
+selectAllReports:
+SELECT * FROM reportEntity WHERE deleted = 0;
+
+selectAllExpenses:
+SELECT * FROM expenseEntity WHERE deleted = 0;
+
+selectAllClients:
+SELECT * FROM clientEntity WHERE deleted = 0;
+
+selectAllPurchaseOrders:
+SELECT * FROM purchaseOrderEntity WHERE deleted = 0;
+
+selectAllProducts:
+SELECT * FROM productEntity WHERE deleted = 0;
+
+selectAllMaterials:
+SELECT * FROM materialEntity WHERE deleted = 0;
+
+selectAllProductMaterials:
+SELECT * FROM product_materialsEntity WHERE deleted = 0;
+
+selectAllPurchaseOrderProducts:
+SELECT * FROM purchaseOrder_ProductsEntity WHERE deleted = 0;
+
+selectProductById:
+SELECT * FROM productEntity WHERE idProduct = ? AND deleted = 0;
