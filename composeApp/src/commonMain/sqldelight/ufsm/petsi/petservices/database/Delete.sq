@@ -1,26 +1,26 @@
 softDeleteUser:
-UPDATE user SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idUser = ?;
+UPDATE userEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idUser = ?;
 
 softDeleteReport:
-UPDATE report SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idReport = ?;
+UPDATE reportEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idReport = ?;
 
 softDeleteExpense:
-UPDATE expense SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idExpense = ?;
+UPDATE expenseEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idExpense = ?;
 
 softDeleteClient:
-UPDATE client SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idClient = ?;
+UPDATE clientEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idClient = ?;
 
 softDeletePurchaseOrder:
-UPDATE purchaseOrder SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idPurchaseOrder = ?;
+UPDATE purchaseOrderEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idPurchaseOrder = ?;
 
 softDeleteProduct:
-UPDATE product SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idProduct = ?;
+UPDATE productEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idProduct = ?;
 
 softDeleteMaterial:
-UPDATE material SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idMaterial = ?;
+UPDATE materialEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idMaterial = ?;
 
 softDeleteProductMaterial:
-UPDATE product_materials SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idProduct = ? AND idMaterial = ?;
+UPDATE product_materialsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idProduct = ? AND idMaterial = ?;
 
 softDeletePurchaseOrderProduct:
-UPDATE purchaseOrder_Products SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idPurchaseOrder = ? AND idProduct = ?;
+UPDATE purchaseOrder_ProductsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP WHERE idPurchaseOrder = ? AND idProduct = ?;

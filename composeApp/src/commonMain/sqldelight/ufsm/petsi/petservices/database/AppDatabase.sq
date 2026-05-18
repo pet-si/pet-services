@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS userEntity (
     idUser TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS user (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS report (
+CREATE TABLE IF NOT EXISTS reportEntity (
     idReport TEXT PRIMARY KEY NOT NULL,
     filePath TEXT NOT NULL,
     date TEXT NOT NULL,
@@ -18,16 +18,16 @@ CREATE TABLE IF NOT EXISTS report (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS settings (
+CREATE TABLE IF NOT EXISTS settingsEntity (
     settingName TEXT NOT NULL UNIQUE,
     value INTEGER AS Boolean DEFAULT 1
 );
 
-CREATE TABLE IF NOT EXISTS sincronization (
+CREATE TABLE IF NOT EXISTS sincronizationEntity (
     updatesTimeStamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS expense (
+CREATE TABLE IF NOT EXISTS expenseEntity (
     idExpense TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     amount REAL NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS expense (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS client (
+CREATE TABLE IF NOT EXISTS clientEntity (
     idClient TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     cpf TEXT UNIQUE,
@@ -48,17 +48,17 @@ CREATE TABLE IF NOT EXISTS client (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS purchaseOrder (
+CREATE TABLE IF NOT EXISTS purchaseOrderEntity (
     idPurchaseOrder TEXT PRIMARY KEY NOT NULL,
     idClient TEXT NOT NULL,
     date TEXT NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
-    FOREIGN KEY (idClient) REFERENCES client(idClient)
+    FOREIGN KEY (idClient) REFERENCES clientEntity(idClient)
 );
 
-CREATE TABLE IF NOT EXISTS product (
+CREATE TABLE IF NOT EXISTS productEntity (
     idProduct TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS product (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS purchaseOrder_Products (
+CREATE TABLE IF NOT EXISTS purchaseOrder_ProductsEntity (
     idPurchaseOrder TEXT NOT NULL,
     idProduct TEXT NOT NULL,
     quantity INTEGER DEFAULT 1,
@@ -78,11 +78,11 @@ CREATE TABLE IF NOT EXISTS purchaseOrder_Products (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     PRIMARY KEY (idPurchaseOrder, idProduct),
-    FOREIGN KEY (idPurchaseOrder) REFERENCES purchaseOrder(idPurchaseOrder),
-    FOREIGN KEY (idProduct) REFERENCES product(idProduct)
+    FOREIGN KEY (idPurchaseOrder) REFERENCES purchaseOrderEntity(idPurchaseOrder),
+    FOREIGN KEY (idProduct) REFERENCES productEntity(idProduct)
 );
 
-CREATE TABLE IF NOT EXISTS material (
+CREATE TABLE IF NOT EXISTS materialEntity (
     idMaterial TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS material (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS product_materials (
+CREATE TABLE IF NOT EXISTS product_materialsEntity (
     idProduct TEXT NOT NULL,
     idMaterial TEXT NOT NULL,
     quantity REAL NOT NULL,
@@ -101,6 +101,6 @@ CREATE TABLE IF NOT EXISTS product_materials (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     PRIMARY KEY (idProduct, idMaterial),
-    FOREIGN KEY (idProduct) REFERENCES product(idProduct),
-    FOREIGN KEY (idMaterial) REFERENCES material(idMaterial)
+    FOREIGN KEY (idProduct) REFERENCES productEntity(idProduct),
+    FOREIGN KEY (idMaterial) REFERENCES materialEntity(idMaterial)
 );

@@ -2,7 +2,7 @@ package ufsm.petsi.petservices.repository.mappers
 
 import ufsm.petsi.petservices.models.User
 import kotlinx.datetime.Instant
-import ufsm.petsi.petservices.database.User as UserEntity
+import ufsm.petsi.petservices.database.UserEntity
 
 fun UserEntity.toModel(): User {
     return User(
