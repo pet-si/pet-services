@@ -10,6 +10,6 @@ fun ReportEntity.toModel(): Report {
         filePath =  filePath,
         date = date,
         updatedAt = Instant.parse(updatedAt),
-        deleted = false
+        deleted = deleted
     )
 }

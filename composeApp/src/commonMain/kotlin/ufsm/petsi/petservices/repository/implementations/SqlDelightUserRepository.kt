@@ -32,8 +32,7 @@ class SqlDelightUserRepository( database: AppDatabase) : UserRepository {
             name = user.name,
             email = user.email,
             companyName = user.companyName,
-            password = user.password,
-            deleted = user.deleted
+            password = user.password
         )
     }
 
@@ -42,12 +41,18 @@ class SqlDelightUserRepository( database: AppDatabase) : UserRepository {
             name = user.name,
             email = user.email,
             companyName = user.companyName,
-            password = user.password,
             idUser = user.idUser
         )
     }
 
-    override suspend fun deleteUser(id: String) {
-        deleteQueries.softDeleteUser(id)
+    override suspend fun updatePassword(idUser: String, newPassword: String) {
+        updateQueries.updatePassword(
+            password = newPassword,
+            idUser = idUser
+        )
+    }
+
+    override suspend fun deleteUser(idUser: String) {
+        deleteQueries.softDeleteUser(idUser)
     }
 }

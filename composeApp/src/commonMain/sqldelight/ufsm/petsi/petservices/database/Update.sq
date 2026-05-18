@@ -1,44 +1,49 @@
 updateUser:
 UPDATE userEntity
-SET name = ?, email = ?, companyName = ?, password = ?, updatedAt = CURRENT_TIMESTAMP
+SET name = ?, email = ?, companyName = ?
+WHERE idUser = ? AND deleted = 0;
+
+updatePassword:
+UPDATE userEntity
+SET password = ?
 WHERE idUser = ? AND deleted = 0;
 
 updateReport:
 UPDATE reportEntity
-SET filePath = ?, date = ?, updatedAt = CURRENT_TIMESTAMP
+SET filePath = ?, date = ?
 WHERE idReport = ? AND deleted = 0;
 
 updateExpense:
 UPDATE expenseEntity
-SET name = ?, amount = ?, date = ?, category = ?, updatedAt = CURRENT_TIMESTAMP
+SET name = ?, amount = ?, date = ?, category = ?
 WHERE idExpense = ? AND deleted = 0;
 
 updateClient:
 UPDATE clientEntity
-SET name = ?, cpf = ?, email = ?, phoneNumber = ?, points = ?, updatedAt = CURRENT_TIMESTAMP
+SET name = ?, cpf = ?, email = ?, phoneNumber = ?, points = ?
 WHERE idClient = ? AND deleted = 0;
 
 updatePurchaseOrder:
 UPDATE purchaseOrderEntity
-SET idClient = ?, date = ?, updatedAt = CURRENT_TIMESTAMP
+SET idClient = ?, date = ?
 WHERE idPurchaseOrder = ? AND deleted = 0;
 
 updateProduct:
 UPDATE productEntity
-SET name = ?, quantity = ?, costPrice = ?, salePrice = ?, minimumStock = ?, soldQuantity = ?, updatedAt = CURRENT_TIMESTAMP
+SET name = ?, quantity = ?, costPrice = ?, salePrice = ?, minimumStock = ?, soldQuantity = ?
 WHERE idProduct = ? AND deleted = 0;
 
 updateMaterial:
 UPDATE materialEntity
-SET name = ?, quantity = ?, costPrice = ?, minimumStock = ?, metric = ?, updatedAt = CURRENT_TIMESTAMP
+SET name = ?, quantity = ?, costPrice = ?, minimumStock = ?, metric = ?
 WHERE idMaterial = ? AND deleted = 0;
 
 updateProductMaterial:
 UPDATE product_materialsEntity
-SET quantity = ?, updatedAt = CURRENT_TIMESTAMP
+SET quantity = ?
 WHERE idProduct = ? AND idMaterial = ? AND deleted = 0;
 
 updatePurchaseOrderProduct:
 UPDATE purchaseOrder_ProductsEntity
-SET quantity = ?, updatedAt = CURRENT_TIMESTAMP
+SET quantity = ?
 WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;

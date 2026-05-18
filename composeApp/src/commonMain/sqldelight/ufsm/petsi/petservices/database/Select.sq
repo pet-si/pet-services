@@ -24,3 +24,6 @@ SELECT * FROM product_materialsEntity WHERE deleted = 0;
 
 selectAllPurchaseOrderProducts:
 SELECT * FROM purchaseOrder_ProductsEntity WHERE deleted = 0;
+
+selectProductById:
+SELECT * FROM productEntity WHERE idProduct = ? AND deleted = 0;
