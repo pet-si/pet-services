@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ufsm.petsi.petservices.database.AppDatabase
 import ufsm.petsi.petservices.models.User
+import ufsm.petsi.petservices.repository.DataResult
 import ufsm.petsi.petservices.repository.interfaces.IUserRepository
 import ufsm.petsi.petservices.repository.mappers.toModel
 
@@ -16,6 +17,19 @@ class UserRepository(database: AppDatabase) : IUserRepository {
     private val insertQueries = database.insertQueries
     private val updateQueries = database.updateQueries
     private val deleteQueries = database.deleteQueries
+
+    override fun loginUser(email: String, password: String): DataResult<User> {
+        return try {
+            val user = selectQueries.selectUserLogin(email, password).executeAsOneOrNull()?.toModel()
+            if (user != null) {
+                return DataResult.Success(user)
+            } else {
+                DataResult.Error("Email ou Senha incorretos.")
+            }
+        } catch (e : Exception) {
+            DataResult.Error(e.message ?: "Ocorreu um erro desconhecido.", e)
+        }
+    }
 
     override fun getUser(): Flow<User?> {
         return selectQueries.selectAllUsers()
