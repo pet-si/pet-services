@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ufsm.petsi.petservices.database.AppDatabase
 import ufsm.petsi.petservices.models.User
-import ufsm.petsi.petservices.repository.interfaces.UserRepository
+import ufsm.petsi.petservices.repository.interfaces.IUserRepository
 import ufsm.petsi.petservices.repository.mappers.toModel
 
-class SqlDelightUserRepository( database: AppDatabase) : UserRepository {
+class UserRepository(database: AppDatabase) : IUserRepository {
 
     private val selectQueries = database.selectQueries
     private val insertQueries = database.insertQueries

@@ -6,11 +6,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import ufsm.petsi.petservices.database.AppDatabase
 import ufsm.petsi.petservices.models.Product
-import ufsm.petsi.petservices.repository.interfaces.ProductRepository
+import ufsm.petsi.petservices.repository.interfaces.IProductRepository
 import kotlinx.coroutines.flow.map
 import ufsm.petsi.petservices.repository.mappers.toModel
 
-class SqlDelightProductRepository( database: AppDatabase) : ProductRepository {
+class ProductRepository(database: AppDatabase) : IProductRepository {
     private val selectQueries = database.selectQueries
     private val insertQueries = database.insertQueries
     private val updateQueries = database.updateQueries
