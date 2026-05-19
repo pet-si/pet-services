@@ -3,7 +3,7 @@ package ufsm.petsi.petservices.repository.interfaces
 import kotlinx.coroutines.flow.Flow
 import ufsm.petsi.petservices.models.Product
 
-interface ProductRepository {
+interface IProductRepository {
     fun getProductById(id: String): Flow<Product?>
     fun getAllProducts(): Flow<List<Product>>
     suspend fun insertProduct(product: Product)

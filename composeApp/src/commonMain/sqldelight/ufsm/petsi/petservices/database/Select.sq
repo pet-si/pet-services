@@ -1,6 +1,9 @@
 selectAllUsers:
 SELECT * FROM userEntity WHERE deleted = 0;
 
+selectUserLogin:
+SELECT * FROM userEntity WHERE email = ? AND password = ?;
+
 selectAllReports:
 SELECT * FROM reportEntity WHERE deleted = 0;
 
