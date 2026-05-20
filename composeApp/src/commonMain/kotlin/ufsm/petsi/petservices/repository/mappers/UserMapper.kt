@@ -1,9 +1,10 @@
 package ufsm.petsi.petservices.repository.mappers
 
 import ufsm.petsi.petservices.models.User
-import kotlinx.datetime.Instant
 import ufsm.petsi.petservices.database.UserEntity
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 fun UserEntity.toModel(): User {
     return User(
         idUser = idUser,
@@ -11,7 +12,7 @@ fun UserEntity.toModel(): User {
         email = email,
         companyName = companyName,
         password = password,
-        updatedAt = Instant.parse(updatedAt),
+        updatedAt = mapEntityDate(updatedAt),
         deleted = deleted
     )
 }
