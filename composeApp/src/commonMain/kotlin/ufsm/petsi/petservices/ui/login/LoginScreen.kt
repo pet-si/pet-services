@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -37,8 +38,8 @@ import ufsm.petsi.petservices.models.User
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = koinViewModel(),
-    onNavigateToHome : (User) -> Unit,
-    onNavigateToSignup : () -> Unit
+    onNavigateToHome: (User) -> Unit,
+    onNavigateToSignup: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     LaunchedEffect(Unit) {
@@ -82,19 +83,21 @@ private fun Header() {
 
 @Composable
 private fun Fields(
-    state : LoginState,
-    onAction : (LoginIntent) -> Unit,
+    state: LoginState,
+    onAction: (LoginIntent) -> Unit,
 ) {
 
     val isError = state.errorMessage != null
     Spacer(Modifier.height(48.dp))
 
     AnimatedVisibility(isError) {
-        Text(
-            state.errorMessage ?: "",
-            color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodyMedium
-        )
+        SelectionContainer {
+            Text(
+                state.errorMessage ?: "",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
     }
 
     Text(
@@ -137,7 +140,7 @@ private fun Fields(
 
 @Composable
 private fun Buttons(
-    onAction : (LoginIntent) -> Unit,
+    onAction: (LoginIntent) -> Unit,
 ) {
     Text(
         "Esqueci minha senha",

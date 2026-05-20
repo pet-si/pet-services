@@ -8,6 +8,7 @@ import ufsm.petsi.petservices.models.User
 import ufsm.petsi.petservices.repository.DataResult
 import ufsm.petsi.petservices.repository.implementations.UserRepository
 import ufsm.petsi.petservices.util.hash
+import kotlin.time.ExperimentalTime
 
 class SignupViewModel(private val repository: UserRepository) : ViewModel() {
     private val _state = MutableStateFlow(SignupState())
@@ -50,6 +51,7 @@ class SignupViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun executeSignup() = viewModelScope.launch {
         _state.update { it.copy(isLoading = true, errorMessage = null) }
 
@@ -62,7 +64,15 @@ class SignupViewModel(private val repository: UserRepository) : ViewModel() {
             password = hashedPassword
         )
 
-        repository.insertUser(user)
-        _effect.emit(SignupEffect.NavigateBack)
+        when (val result = repository.insertUser(user)) {
+            DataResult.Default -> TODO()
+            is DataResult.Error -> {
+                _state.update { it.copy(errorMessage = result.message) }
+            }
+            DataResult.Loading -> TODO()
+            is DataResult.Success -> {
+                _effect.emit(SignupEffect.NavigateBack)
+            }
+        }
     }
 }
