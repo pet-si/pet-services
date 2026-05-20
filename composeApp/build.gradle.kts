@@ -25,6 +25,9 @@ kotlin {
             // Injeção de dependencia
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+
+            // Networking
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -45,6 +48,11 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+
+            // Networking
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -58,6 +66,9 @@ kotlin {
 
             // Injeção de dependência
             implementation(libs.koin.compose)
+
+            // Networking
+            implementation(libs.ktor.client.okhttp)
         }
     }
 }
@@ -90,6 +101,7 @@ android {
 }
 
 dependencies {
+    implementation("io.ktor:ktor-client-core-jvm:3.4.3")
     debugImplementation(libs.compose.uiTooling)
 }
 
