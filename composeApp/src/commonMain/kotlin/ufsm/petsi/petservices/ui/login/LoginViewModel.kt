@@ -53,7 +53,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 _state.update { it.copy(isLoading = true) }
             }
             is DataResult.Success -> {
-                TODO()
+                _effect.emit(LoginEffect.NavigateToHome(result.data))
             }
         }
     }

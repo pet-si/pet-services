@@ -1,0 +1,9 @@
+package ufsm.petsi.petservices.ui.home
+
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+
+@Composable
+fun HomeScreen(userId : String) {
+    Text("Home, $userId")
+}
