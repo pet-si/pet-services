@@ -33,7 +33,9 @@ fun AppNavigation() {
             )
         }
         composable<SignupRoute>{
-            SignupScreen()
+            SignupScreen(onNavigateBack = {
+                navController.popBackStack()
+            })
         }
         composable<HomeRoute> { backStackEntry ->
             val homeRoute = backStackEntry.toRoute<HomeRoute>()

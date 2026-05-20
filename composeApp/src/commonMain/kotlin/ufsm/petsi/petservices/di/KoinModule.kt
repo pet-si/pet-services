@@ -11,6 +11,7 @@ import ufsm.petsi.petservices.database.DriverFactory
 import ufsm.petsi.petservices.repository.implementations.ProductRepository
 import ufsm.petsi.petservices.repository.implementations.UserRepository
 import ufsm.petsi.petservices.ui.login.LoginViewModel
+import ufsm.petsi.petservices.ui.signup.SignupViewModel
 
 expect val targetModule: Module
 
@@ -21,6 +22,7 @@ val sharedModule = module {
     single<ProductRepository> { ProductRepository(get()) }
 
     viewModelOf(::LoginViewModel)
+    viewModelOf(::SignupViewModel)
 }
 
 fun initializeKoin(config: (KoinApplication.() -> Unit)? = null) {
