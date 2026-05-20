@@ -44,87 +44,115 @@ fun LoginScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val isError = state.errorMessage != null
-
-        Spacer(Modifier.height(48.dp))
-        Text("Login", fontSize = 32.sp)
-        Text("Insira seu usuário e senha")
 
         Spacer(Modifier.height(48.dp))
 
-            AnimatedVisibility(isError) {
-                Text(
-                    state.errorMessage ?: "",
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
-        Text(
-            "Email",
-            modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
-            color = MaterialTheme.colorScheme.primary
-        )
-        OutlinedTextField(
-            value = state.email,
-            modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp, bottom = 8.dp),
-            shape = RoundedCornerShape(12.dp),
-            singleLine = true,
-            isError = isError,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            onValueChange = {
-                viewModel.handleIntent(LoginIntent.ChangeLogin(it))
+        Header()
+        Fields(state, onAction = {
+            viewModel.handleIntent(it)
+        })
+        Buttons(
+            onAction = {
+                viewModel.handleIntent(it)
             }
         )
+
+    }
+}
+
+@Composable
+private fun Header() {
+    Text("Login", fontSize = 32.sp)
+    Text("Insira seu usuário e senha")
+}
+
+@Composable
+private fun Fields(
+    state : LoginState,
+    onAction : (LoginIntent) -> Unit,
+) {
+
+    val isError = state.errorMessage != null
+    Spacer(Modifier.height(48.dp))
+
+    AnimatedVisibility(isError) {
         Text(
-            "Senha",
-            modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
-            color = MaterialTheme.colorScheme.primary
+            state.errorMessage ?: "",
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodyMedium
         )
-        OutlinedTextField(
-            value = state.password,
-            modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp),
-            shape = RoundedCornerShape(12.dp),
-            visualTransformation = PasswordVisualTransformation(),
-            singleLine = true,
-            isError = isError,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = {
+    }
 
-            }),
-            onValueChange = {
-                viewModel.handleIntent(LoginIntent.ChangePassword(it))
-            }
-        )
-        Text(
-            "Esqueci minha senha",
-            color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier.padding(vertical = 12.dp),
-            fontSize = 16.sp
-        )
-
-        Spacer(Modifier.height(32.dp))
-
-        Button(
-            onClick = {
-                viewModel.handleIntent(LoginIntent.LoginClicked)
-            },
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 64.dp)
-        ) {
-            Text("Efetuar Login")
+    Text(
+        "Email",
+        modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
+        color = MaterialTheme.colorScheme.primary
+    )
+    OutlinedTextField(
+        value = state.email,
+        modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp, bottom = 8.dp),
+        shape = RoundedCornerShape(12.dp),
+        singleLine = true,
+        isError = isError,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        onValueChange = {
+            onAction(LoginIntent.ChangeLogin(it))
         }
-        Button(
-            onClick = {
-                viewModel.handleIntent(LoginIntent.SignupClicked)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary
-            ),
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 64.dp)
-        ) {
-            Text("Cadastrar")
+    )
+    Text(
+        "Senha",
+        modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
+        color = MaterialTheme.colorScheme.primary
+    )
+    OutlinedTextField(
+        value = state.password,
+        modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp),
+        shape = RoundedCornerShape(12.dp),
+        visualTransformation = PasswordVisualTransformation(),
+        singleLine = true,
+        isError = isError,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = {
+
+        }),
+        onValueChange = {
+            onAction(LoginIntent.ChangePassword(it))
         }
+    )
+}
+
+@Composable
+private fun Buttons(
+    onAction : (LoginIntent) -> Unit,
+) {
+    Text(
+        "Esqueci minha senha",
+        color = MaterialTheme.colorScheme.secondary,
+        modifier = Modifier.padding(vertical = 12.dp),
+        fontSize = 16.sp
+    )
+
+    Spacer(Modifier.height(32.dp))
+
+    Button(
+        onClick = {
+            onAction(LoginIntent.LoginClicked)
+        },
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 64.dp)
+    ) {
+        Text("Efetuar Login")
+    }
+    Button(
+        onClick = {
+            onAction(LoginIntent.SignupClicked)
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        ),
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 64.dp)
+    ) {
+        Text("Cadastrar")
     }
 }

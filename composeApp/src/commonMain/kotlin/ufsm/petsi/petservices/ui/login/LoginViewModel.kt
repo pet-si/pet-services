@@ -17,10 +17,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _effect = MutableSharedFlow<LoginEffect>()
     val effect = _effect.asSharedFlow()
 
-    private val _user = MutableStateFlow<User?>(null)
-    val user = _user.asStateFlow()
-
-
     fun handleIntent(intent: LoginIntent) {
         when (intent) {
             is LoginIntent.ChangeLogin -> {
@@ -57,7 +53,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 _state.update { it.copy(isLoading = true) }
             }
             is DataResult.Success -> {
-                _user.value = result.data
+                TODO()
             }
         }
     }
