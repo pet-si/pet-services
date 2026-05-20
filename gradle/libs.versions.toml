@@ -23,6 +23,7 @@ ktor = "3.5.0"
 kotlinx-serialization = "1.7.3"
 
 navigationCompose = "2.9.2"
+kotlinx-datetime = "0.8.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
