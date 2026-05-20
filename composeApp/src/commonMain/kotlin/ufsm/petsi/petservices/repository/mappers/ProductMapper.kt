@@ -1,9 +1,10 @@
 package ufsm.petsi.petservices.repository.mappers
 
-import kotlinx.datetime.Instant
 import ufsm.petsi.petservices.models.Product
 import ufsm.petsi.petservices.database.ProductEntity
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 fun ProductEntity.toModel(): Product {
     return Product(
         idProduct = idProduct,
@@ -13,7 +14,7 @@ fun ProductEntity.toModel(): Product {
         salePrice = salePrice,
         minimumStock = minimumStock!!.toInt(),
         soldQuantity = soldQuantity!!.toInt(),
-        updatedAt = Instant.parse(updatedAt),
+        updatedAt = mapEntityDate(updatedAt),
         deleted = deleted
     )
 }
