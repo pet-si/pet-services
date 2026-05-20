@@ -40,14 +40,20 @@ class UserRepository(database: AppDatabase) : IUserRepository {
             }
     }
 
-    override suspend fun insertUser(user: User) {
-        insertQueries.insertUser(
-            idUser = user.idUser,
-            name = user.name,
-            email = user.email,
-            companyName = user.companyName,
-            password = user.password
-        )
+    override suspend fun insertUser(user: User): DataResult<Boolean> {
+        return try {
+            if (user.password.isNullOrEmpty()) return DataResult.Error("Por favor insira uma senha válida.")
+            insertQueries.insertUser(
+                idUser = user.idUser,
+                name = user.name,
+                email = user.email,
+                companyName = user.companyName,
+                password = user.password
+            )
+            DataResult.Success(true)
+        } catch (e : Exception) {
+            DataResult.Error(e.message ?: "Ocorreu um erro desconhecido.", e)
+        }
     }
 
     override suspend fun updateUser(user: User) {

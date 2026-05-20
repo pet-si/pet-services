@@ -35,8 +35,10 @@ import org.jetbrains.compose.resources.painterResource
 
 import petservices.composeapp.generated.resources.Res
 import petservices.composeapp.generated.resources.compose_multiplatform
+import ufsm.petsi.petservices.models.User
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalTime::class)
 @Composable
 @Preview
 fun App() {
