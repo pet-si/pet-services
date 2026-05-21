@@ -1,11 +1,12 @@
 package ufsm.petsi.petservices.models
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Serializable
-data class PurchaseOrder(
+data class PurchaseOrder @OptIn(ExperimentalTime::class) constructor(
     val idPurchaseOrder: String,
     val idClient: String,
     val date: String,
