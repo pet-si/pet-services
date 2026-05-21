@@ -15,7 +15,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +27,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.compose.viewmodel.koinViewModel
+import ufsm.petsi.petservices.ui.components.DefaultTextField
 
 @Composable
 fun SignupScreen(
@@ -78,12 +78,12 @@ private fun Fields(
     state : SignupState,
     onAction : (SignupIntent) -> Unit,
 ) {
-    val isError = state.errorMessage != null
+    val isError = state.signupError != null
     Spacer(Modifier.height(48.dp))
 
     AnimatedVisibility(isError) {
         Text(
-            state.errorMessage ?: "",
+            state.signupError ?: "",
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodyMedium
         )
@@ -93,13 +93,11 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.name,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp, bottom = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        singleLine = true,
-        isError = isError,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        isError = state.nameError != null,
+        errorMessage = state.nameError ?: "",
         onValueChange = {
             onAction(SignupIntent.ChangeName(it))
         }
@@ -109,13 +107,11 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.companyName,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp, bottom = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        singleLine = true,
-        isError = isError,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        isError = state.companyNameError != null,
+        errorMessage = state.companyNameError ?: "",
         onValueChange = {
             onAction(SignupIntent.ChangeCompanyName(it))
         }
@@ -125,13 +121,11 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.email,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp, bottom = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        singleLine = true,
-        isError = isError,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        isError = state.emailError != null,
+        errorMessage = state.emailError ?: "",
         onValueChange = {
             onAction(SignupIntent.ChangeEmail(it))
         }
@@ -141,14 +135,12 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.password,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp),
-        shape = RoundedCornerShape(12.dp),
         visualTransformation = PasswordVisualTransformation(),
-        singleLine = true,
-        isError = isError,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        isError = state.passwordError != null,
+        errorMessage = state.passwordError ?: "",
         onValueChange = {
             onAction(SignupIntent.ChangePassword(it))
         }
@@ -158,13 +150,12 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.confirmPassword,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp),
-        shape = RoundedCornerShape(12.dp),
         visualTransformation = PasswordVisualTransformation(),
-        singleLine = true,
-        isError = isError,
+        isError = state.confirmPasswordError != null,
+        errorMessage = state.confirmPasswordError ?: "",
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {
             onAction(SignupIntent.ConfirmClicked)

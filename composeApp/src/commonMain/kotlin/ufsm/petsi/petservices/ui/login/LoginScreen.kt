@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.models.User
+import ufsm.petsi.petservices.ui.components.DefaultTextField
 
 @Composable
 fun LoginScreen(
@@ -105,13 +106,9 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.email,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp, bottom = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        singleLine = true,
-        isError = isError,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         onValueChange = {
             onAction(LoginIntent.ChangeLogin(it))
         }
@@ -121,16 +118,13 @@ private fun Fields(
         modifier = Modifier.fillMaxWidth().padding(start = 66.dp),
         color = MaterialTheme.colorScheme.primary
     )
-    OutlinedTextField(
+    DefaultTextField(
         value = state.password,
         modifier = Modifier.fillMaxWidth().padding(start = 64.dp, end = 64.dp),
-        shape = RoundedCornerShape(12.dp),
         visualTransformation = PasswordVisualTransformation(),
-        singleLine = true,
-        isError = isError,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {
-
+            onAction(LoginIntent.LoginClicked)
         }),
         onValueChange = {
             onAction(LoginIntent.ChangePassword(it))

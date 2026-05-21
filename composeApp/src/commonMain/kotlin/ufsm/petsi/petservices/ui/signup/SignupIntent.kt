@@ -20,7 +20,14 @@ data class SignupState (
     val password: String = "",
     val confirmPassword: String = "",
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+
+    // Tratamento de erros
+    val nameError : String? = null,
+    val companyNameError : String? = null,
+    val emailError : String? = null,
+    val passwordError : String? = null,
+    val confirmPasswordError : String? = null,
+    val signupError: String? = null,
 )
 
 // Efeitos únicos, notificação ou navegação, algo que ocorre apenas uma vez na tela
