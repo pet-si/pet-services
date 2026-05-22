@@ -1,9 +1,13 @@
 package ufsm.petsi.petservices.ui.login
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,13 +32,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import petservices.composeapp.generated.resources.Res
+import petservices.composeapp.generated.resources.login_image
 import ufsm.petsi.petservices.models.User
 import ufsm.petsi.petservices.ui.components.DefaultTextField
+import ufsm.petsi.petservices.util.isWideScreen
 
 @Composable
 fun LoginScreen(
@@ -42,6 +52,7 @@ fun LoginScreen(
     onNavigateToHome: (User) -> Unit,
     onNavigateToSignup: () -> Unit
 ) {
+
     val state by viewModel.state.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
@@ -53,6 +64,49 @@ fun LoginScreen(
         }
     }
 
+    if (isWideScreen) {
+        WideLayout(state, viewModel)
+    } else {
+        MobileLayout(state, viewModel)
+    }
+
+}
+
+@Composable
+private fun WideLayout(
+    state: LoginState,
+    viewModel: LoginViewModel
+) {
+    Row(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+            .safeContentPadding()
+    ) {
+        Image(
+            painter = painterResource(Res.drawable.login_image),
+            contentDescription = "Imagem do arco da ufsm",
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.weight(1f).fillMaxHeight()
+        )
+        Column(modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(Modifier.height(48.dp))
+            Header()
+            Fields(
+                state,
+                onAction = { viewModel.handleIntent(it) }
+            )
+            Buttons {
+                viewModel.handleIntent(it)
+            }
+        }
+    }
+}
+
+@Composable
+private fun MobileLayout(
+    state: LoginState,
+    viewModel: LoginViewModel
+) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
