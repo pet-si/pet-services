@@ -14,7 +14,7 @@ data class Product @OptIn(ExperimentalTime::class) constructor(
     val salePrice: Double,
     val minimumStock: Int = 0,
     val soldQuantity: Int = 0,
+    val materials: List<ProductMaterial> = emptyList(),
     val updatedAt: Instant = Clock.System.now(),
     val deleted: Boolean = false
 )
-

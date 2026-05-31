@@ -14,8 +14,10 @@ import ufsm.petsi.petservices.repository.UNKNOWN_ERROR
 import ufsm.petsi.petservices.repository.interfaces.IProductRepository
 import ufsm.petsi.petservices.repository.mappers.toModel
 import ufsm.petsi.petservices.repository.notFoundError
+import kotlin.time.ExperimentalTime
 
-class ProductRepository(database: AppDatabase) : IProductRepository {
+@OptIn(ExperimentalTime::class)
+class ProductRepository(private val database: AppDatabase) : IProductRepository {
     private val selectQueries = database.selectQueries
     private val insertQueries = database.insertQueries
     private val updateQueries = database.updateQueries
@@ -23,9 +25,12 @@ class ProductRepository(database: AppDatabase) : IProductRepository {
 
     override fun getProductById(id: String): DataResult<Product> {
         return try {
-            val product = selectQueries.selectProductById(id).executeAsOneOrNull()?.toModel()
-            if (product != null) {
-                DataResult.Success(product)
+            val productEntity = selectQueries.selectProductById(id).executeAsOneOrNull()
+            if (productEntity != null) {
+                val materials = selectQueries.selectMaterialsByProductId(id)
+                    .executeAsList()
+                    .map { it.toModel() }
+                DataResult.Success(productEntity.toModel().copy(materials = materials))
             } else {
                 DataResult.Error(notFoundError("Produto"))
             }
@@ -38,21 +43,37 @@ class ProductRepository(database: AppDatabase) : IProductRepository {
         return selectQueries.selectAllProducts()
             .asFlow()
             .mapToList(Dispatchers.IO)
-            .map<List<ProductEntity>, DataResult<List<Product>>> { list -> DataResult.Success(list.map { it.toModel() }) }
+            .map<List<ProductEntity>, DataResult<List<Product>>> { list ->
+                DataResult.Success(list.map { entity ->
+                    val materials = selectQueries.selectMaterialsByProductId(entity.idProduct)
+                        .executeAsList()
+                        .map { it.toModel() }
+                    entity.toModel().copy(materials = materials)
+                })
+            }
             .catch { e -> emit(DataResult.Error(e.message ?: UNKNOWN_ERROR)) }
     }
 
     override suspend fun insertProduct(product: Product) : DataResult<Boolean> {
         return  try {
-            insertQueries.insertProduct(
-                idProduct = product.idProduct,
-                name = product.name,
-                quantity = product.quantity,
-                costPrice = product.costPrice,
-                salePrice = product.salePrice,
-                minimumStock = product.minimumStock.toLong(),
-                soldQuantity = product.soldQuantity.toLong()
-            )
+            database.transaction {
+                insertQueries.insertProduct(
+                    idProduct = product.idProduct,
+                    name = product.name,
+                    quantity = product.quantity,
+                    costPrice = product.costPrice,
+                    salePrice = product.salePrice,
+                    minimumStock = product.minimumStock.toLong(),
+                    soldQuantity = product.soldQuantity.toLong()
+                )
+                product.materials.forEach { pm ->
+                    insertQueries.insertProductMaterial(
+                        idProduct = product.idProduct,
+                        idMaterial = pm.idMaterial,
+                        quantity = pm.quantity
+                    )
+                }
+            }
             DataResult.Success(true)
         } catch (e: Exception) {
             DataResult.Error(e.message ?: UNKNOWN_ERROR)
@@ -61,15 +82,27 @@ class ProductRepository(database: AppDatabase) : IProductRepository {
 
     override suspend fun updateProduct(product: Product) : DataResult<Boolean> {
         return try {
-            updateQueries.updateProduct(
-                name = product.name,
-                quantity = product.quantity,
-                costPrice = product.costPrice,
-                salePrice = product.salePrice,
-                minimumStock = product.minimumStock.toLong(),
-                soldQuantity = product.soldQuantity.toLong(),
-                idProduct = product.idProduct,
-            )
+            database.transaction {
+                updateQueries.updateProduct(
+                    name = product.name,
+                    quantity = product.quantity,
+                    costPrice = product.costPrice,
+                    salePrice = product.salePrice,
+                    minimumStock = product.minimumStock.toLong(),
+                    soldQuantity = product.soldQuantity.toLong(),
+                    idProduct = product.idProduct,
+                )
+
+                deleteQueries.softDeleteAllProductMaterials(product.idProduct)
+
+                product.materials.forEach { pm ->
+                    insertQueries.insertProductMaterial(
+                        idProduct = product.idProduct,
+                        idMaterial = pm.idMaterial,
+                        quantity = pm.quantity
+                    )
+                }
+            }
             DataResult.Success(true)
         } catch (e: Exception) {
             DataResult.Error(e.message ?: UNKNOWN_ERROR)

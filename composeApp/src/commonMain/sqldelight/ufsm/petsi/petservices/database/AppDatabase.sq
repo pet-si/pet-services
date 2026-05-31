@@ -19,12 +19,12 @@ CREATE TABLE IF NOT EXISTS reportEntity (
 );
 
 CREATE TABLE IF NOT EXISTS settingsEntity (
-    settingName TEXT NOT NULL UNIQUE,
+    settingName TEXT PRIMARY KEY NOT NULL,
     value INTEGER AS Boolean DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS sincronizationEntity (
-    updatesTimeStamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updateTimeStamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS expenseEntity (

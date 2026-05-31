@@ -62,6 +62,10 @@ selectAllProductMaterials:
 SELECT * FROM productMaterialsEntity
 WHERE deleted = 0;
 
+selectMaterialsByProductId:
+SELECT * FROM productMaterialsEntity
+WHERE idProduct = ? AND deleted = 0;
+
 selectPurchaseOrderProductById:
 SELECT * FROM purchaseOrderProductsEntity
 WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;
@@ -69,3 +73,13 @@ WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;
 selectAllPurchaseOrderProducts:
 SELECT * FROM purchaseOrderProductsEntity
 WHERE deleted = 0;
+
+selectSettingByName:
+SELECT * FROM settingsEntity
+WHERE settingName = ?;
+
+selectAllSettings:
+SELECT * FROM settingsEntity;
+
+selectLatestSincronization:
+SELECT * FROM sincronizationEntity ORDER BY updateTimeStamp DESC LIMIT 1;

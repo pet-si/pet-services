@@ -30,6 +30,14 @@ softDeleteProductMaterial:
 UPDATE productMaterialsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
 WHERE idProduct = ? AND idMaterial = ?;
 
+softDeleteAllProductMaterials:
+UPDATE productMaterialsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
+WHERE idProduct = ?;
+
 softDeletePurchaseOrderProduct:
 UPDATE purchaseOrderProductsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
 WHERE idPurchaseOrder = ? AND idProduct = ?;
+
+deleteSetting:
+DELETE FROM settingsEntity
+WHERE settingName = ?;

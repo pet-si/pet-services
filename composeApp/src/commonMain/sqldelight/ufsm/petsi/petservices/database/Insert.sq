@@ -39,5 +39,4 @@ INSERT OR REPLACE INTO settingsEntity (settingName, value)
 VALUES (?, ?);
 
 insertSincronization:
-INSERT OR REPLACE INTO sincronizationEntity (updatesTimeStamp)
-VALUES (CURRENT_TIMESTAMP);
+INSERT INTO sincronizationEntity (updateTimeStamp) VALUES (CURRENT_TIMESTAMP);

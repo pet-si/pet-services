@@ -47,3 +47,9 @@ updatePurchaseOrderProduct:
 UPDATE purchaseOrderProductsEntity
 SET quantity = ?, updatedAt = CURRENT_TIMESTAMP
 WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;
+
+updateSetting:
+UPDATE settingsEntity
+SET value = ?
+WHERE settingName = ?;
+
