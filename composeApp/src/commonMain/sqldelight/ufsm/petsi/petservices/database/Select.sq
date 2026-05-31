@@ -1,32 +1,71 @@
 selectAllUsers:
-SELECT * FROM userEntity WHERE deleted = 0;
+SELECT * FROM userEntity
+WHERE deleted = 0;
 
 selectUserLogin:
-SELECT * FROM userEntity WHERE email = ? AND password = ?;
+SELECT * FROM userEntity
+WHERE email = ? AND password = ? AND deleted = 0;
+
+selectReportById:
+SELECT * FROM reportEntity
+WHERE idReport = ? AND deleted = 0;
 
 selectAllReports:
-SELECT * FROM reportEntity WHERE deleted = 0;
+SELECT * FROM reportEntity
+WHERE deleted = 0;
+
+selectExpenseById:
+SELECT * FROM expenseEntity
+WHERE idExpense = ? AND deleted = 0;
 
 selectAllExpenses:
-SELECT * FROM expenseEntity WHERE deleted = 0;
+SELECT * FROM expenseEntity
+WHERE deleted = 0;
+
+selectClientById:
+SELECT * FROM clientEntity
+WHERE idClient = ? AND deleted = 0;
 
 selectAllClients:
-SELECT * FROM clientEntity WHERE deleted = 0;
+SELECT * FROM clientEntity
+WHERE deleted = 0;
+
+selectPurchaseOrderById:
+SELECT * FROM purchaseOrderEntity
+WHERE idPurchaseOrder = ? AND deleted = 0;
 
 selectAllPurchaseOrders:
-SELECT * FROM purchaseOrderEntity WHERE deleted = 0;
-
-selectAllProducts:
-SELECT * FROM productEntity WHERE deleted = 0;
-
-selectAllMaterials:
-SELECT * FROM materialEntity WHERE deleted = 0;
-
-selectAllProductMaterials:
-SELECT * FROM product_materialsEntity WHERE deleted = 0;
-
-selectAllPurchaseOrderProducts:
-SELECT * FROM purchaseOrder_ProductsEntity WHERE deleted = 0;
+SELECT * FROM purchaseOrderEntity
+WHERE deleted = 0;
 
 selectProductById:
-SELECT * FROM productEntity WHERE idProduct = ? AND deleted = 0;
+SELECT * FROM productEntity
+WHERE idProduct = ? AND deleted = 0;
+
+selectAllProducts:
+SELECT * FROM productEntity
+WHERE deleted = 0;
+
+selectMaterialById:
+SELECT * FROM materialEntity
+WHERE idMaterial = ? AND deleted = 0;
+
+selectAllMaterials:
+SELECT * FROM materialEntity
+WHERE deleted = 0;
+
+selectProductMaterialById:
+SELECT * FROM productMaterialsEntity
+WHERE idProduct = ? AND idMaterial = ? AND deleted = 0;
+
+selectAllProductMaterials:
+SELECT * FROM productMaterialsEntity
+WHERE deleted = 0;
+
+selectPurchaseOrderProductById:
+SELECT * FROM purchaseOrderProductsEntity
+WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;
+
+selectAllPurchaseOrderProducts:
+SELECT * FROM purchaseOrderProductsEntity
+WHERE deleted = 0;

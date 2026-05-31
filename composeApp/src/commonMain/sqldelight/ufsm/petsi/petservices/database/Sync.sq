@@ -20,7 +20,7 @@ selectMaterialsAfter:
 SELECT * FROM materialEntity WHERE updatedAt > ?;
 
 selectProductMaterialsAfter:
-SELECT * FROM product_materialsEntity WHERE updatedAt > ?;
+SELECT * FROM productMaterialsEntity WHERE updatedAt > ?;
 
 selectPurchaseOrderProductsAfter:
-SELECT * FROM purchaseOrder_ProductsEntity WHERE updatedAt > ?;
+SELECT * FROM purchaseOrderProductsEntity WHERE updatedAt > ?;

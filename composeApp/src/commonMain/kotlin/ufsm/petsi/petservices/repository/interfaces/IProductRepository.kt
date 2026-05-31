@@ -2,11 +2,12 @@ package ufsm.petsi.petservices.repository.interfaces
 
 import kotlinx.coroutines.flow.Flow
 import ufsm.petsi.petservices.models.Product
+import ufsm.petsi.petservices.repository.DataResult
 
 interface IProductRepository {
-    fun getProductById(id: String): Flow<Product?>
-    fun getAllProducts(): Flow<List<Product>>
-    suspend fun insertProduct(product: Product)
-    suspend fun updateProduct(product: Product)
-    suspend fun deleteProduct(id: String)
+    fun getProductById(id: String): DataResult<Product>
+    fun getAllProducts(): Flow<DataResult<List<Product>>>
+    suspend fun insertProduct(product: Product) : DataResult<Boolean>
+    suspend fun updateProduct(product: Product) : DataResult<Boolean>
+    suspend fun deleteProduct(id: String) : DataResult<Boolean>
 }

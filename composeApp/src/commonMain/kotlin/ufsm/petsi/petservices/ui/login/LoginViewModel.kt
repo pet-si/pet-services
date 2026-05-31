@@ -9,7 +9,9 @@ import ufsm.petsi.petservices.repository.DataResult
 import ufsm.petsi.petservices.repository.implementations.UserRepository
 import ufsm.petsi.petservices.util.hash
 import java.security.MessageDigest
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     var state = _state.asStateFlow()

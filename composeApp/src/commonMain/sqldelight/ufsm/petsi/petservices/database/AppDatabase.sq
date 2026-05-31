@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS productEntity (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS purchaseOrder_ProductsEntity (
+CREATE TABLE IF NOT EXISTS purchaseOrderProductsEntity (
     idPurchaseOrder TEXT NOT NULL,
     idProduct TEXT NOT NULL,
     quantity INTEGER DEFAULT 1,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS materialEntity (
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS product_materialsEntity (
+CREATE TABLE IF NOT EXISTS productMaterialsEntity (
     idProduct TEXT NOT NULL,
     idMaterial TEXT NOT NULL,
     quantity REAL NOT NULL,

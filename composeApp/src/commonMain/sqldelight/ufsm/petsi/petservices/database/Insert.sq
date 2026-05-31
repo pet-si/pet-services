@@ -27,11 +27,11 @@ INSERT OR REPLACE INTO materialEntity (idMaterial, name, quantity, costPrice, mi
 VALUES (?, ?, ?, ?, ?, ?);
 
 insertPurchaseOrderProduct:
-INSERT OR REPLACE INTO purchaseOrder_ProductsEntity (idPurchaseOrder, idProduct, quantity)
+INSERT OR REPLACE INTO purchaseOrderProductsEntity (idPurchaseOrder, idProduct, quantity)
 VALUES (?, ?, ?);
 
 insertProductMaterial:
-INSERT OR REPLACE INTO product_materialsEntity (idProduct, idMaterial, quantity)
+INSERT OR REPLACE INTO productMaterialsEntity (idProduct, idMaterial, quantity)
 VALUES (?, ?, ?);
 
 insertSetting:
