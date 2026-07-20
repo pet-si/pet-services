@@ -1,5 +1,6 @@
 package ufsm.petsi.petservices
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -16,7 +17,7 @@ import ufsm.petsi.petservices.util.getWindowSize
 @Preview
 fun App() {
     MaterialTheme {
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        BoxWithConstraints(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             val windowSize = getWindowSize(maxWidth)
             CompositionLocalProvider(LocalWindowSize provides windowSize) {
                 AppNavigation()

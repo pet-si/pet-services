@@ -1,5 +1,6 @@
 package ufsm.petsi.petservices.ui.login
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -64,10 +65,14 @@ fun LoginScreen(
         }
     }
 
-    if (isWideScreen) {
-        WideLayout(state, viewModel)
-    } else {
-        MobileLayout(state, viewModel)
+    AnimatedContent(
+        targetState = isWideScreen
+    ) {
+        if (it) {
+            WideLayout(state, viewModel)
+        } else {
+            MobileLayout(state, viewModel)
+        }
     }
 
 }
@@ -87,8 +92,10 @@ private fun WideLayout(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.weight(1f).fillMaxHeight()
         )
-        Column(modifier = Modifier.weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Spacer(Modifier.height(48.dp))
             Header()
             Fields(
