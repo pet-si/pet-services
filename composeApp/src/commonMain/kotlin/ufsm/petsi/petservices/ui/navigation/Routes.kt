@@ -3,10 +3,16 @@ package ufsm.petsi.petservices.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object LoginRoute
+data object LoginRoute
 
 @Serializable
-object SignupRoute
+data object SignupRoute
 
 @Serializable
-data class HomeRoute(val userId : String)
+data class MainGraph(val userId : String)
+
+@Serializable
+data object HomeRoute
+
+@Serializable
+data object ProductRoute

@@ -22,6 +22,8 @@ koin = "4.2.1"
 ktor = "3.5.0"
 kotlinx-serialization = "1.7.3"
 
+materialIcons = "2.2.1"
+
 navigationCompose = "2.9.2"
 
 [libraries]
@@ -66,6 +68,9 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 
 # Navigation for compose
 navigation-compose = {module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose"}
+
+# Material Icons
+material-icons = {module = "com.composables:icons-material-icons-outlined-cmp", version.ref = "materialIcons"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

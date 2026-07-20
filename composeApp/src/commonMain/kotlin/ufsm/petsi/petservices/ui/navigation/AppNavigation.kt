@@ -1,45 +1,93 @@
 package ufsm.petsi.petservices.ui.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import ufsm.petsi.petservices.ui.home.HomeScreen
 import ufsm.petsi.petservices.ui.login.LoginScreen
+import ufsm.petsi.petservices.ui.navigation.navigationBar.BottomNavigationBar
+import ufsm.petsi.petservices.ui.products.ProductsScreen
 import ufsm.petsi.petservices.ui.signup.SignupScreen
 
 
+@Suppress("UnrememberedGetBackStackEntry")
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = LoginRoute,
-    ) {
-        composable<LoginRoute>{
-            LoginScreen(
-                onNavigateToHome = {
-                    navController.navigate(HomeRoute(it.idUser)) {
-                        popUpTo<LoginRoute> {
-                            inclusive = true
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val showNavigationBar =
+        (currentDestination?.route != LoginRoute::class.qualifiedName && currentDestination?.route != SignupRoute::class.qualifiedName)
+
+    Scaffold(
+        bottomBar = {
+            AnimatedVisibility(visible = showNavigationBar) {
+                if (showNavigationBar)
+                    BottomNavigationBar(
+                        currentDestination = currentDestination,
+                        onSelectKey = {
+                            navController.navigate(it) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
+                    )
+            }
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            modifier = Modifier.padding(innerPadding),
+            startDestination = LoginRoute,
+        ) {
+            composable<LoginRoute> {
+                LoginScreen(
+                    onNavigateToHome = {
+                        navController.navigate(MainGraph(it.idUser)) {
+                            popUpTo<LoginRoute> {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onNavigateToSignup = {
+                        navController.navigate(SignupRoute)
                     }
-                },
-                onNavigateToSignup = {
-                    navController.navigate(SignupRoute)
+                )
+            }
+            composable<SignupRoute> {
+                SignupScreen(onNavigateBack = {
+                    navController.popBackStack()
+                })
+            }
+
+            navigation<MainGraph>(startDestination = HomeRoute) {
+                composable<HomeRoute> {
+                    val parentEntry = remember(it) { navController.getBackStackEntry<MainGraph>() }
+                    val mainArgs = parentEntry.toRoute<MainGraph>()
+                    HomeScreen(mainArgs.userId)
                 }
-            )
-        }
-        composable<SignupRoute>{
-            SignupScreen(onNavigateBack = {
-                navController.popBackStack()
-            })
-        }
-        composable<HomeRoute> { backStackEntry ->
-            val homeRoute = backStackEntry.toRoute<HomeRoute>()
-            HomeScreen(homeRoute.userId)
+                composable<ProductRoute> {
+                    val parentEntry = remember(it) { navController.getBackStackEntry<MainGraph>() }
+                    val mainArgs = parentEntry.toRoute<MainGraph>()
+                    ProductsScreen(mainArgs.userId)
+                }
+            }
+
         }
     }
 }
