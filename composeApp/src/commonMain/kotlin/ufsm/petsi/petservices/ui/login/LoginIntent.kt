@@ -22,6 +22,6 @@ data class LoginState (
 // Efeitos únicos, notificação ou navegação, algo que ocorre apenas uma vez na tela
 sealed interface LoginEffect {
     data object NavigateToSignup : LoginEffect
-    data class NavigateToHome(val user : User) : LoginEffect
+    data object NavigateToHome : LoginEffect
     data class ShowToast(val message : String) : LoginEffect
 }

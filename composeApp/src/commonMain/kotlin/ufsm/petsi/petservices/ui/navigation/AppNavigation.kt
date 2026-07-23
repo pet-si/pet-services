@@ -13,14 +13,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
+import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.ui.home.HomeScreen
 import ufsm.petsi.petservices.ui.login.LoginScreen
 import ufsm.petsi.petservices.ui.navigation.navigationBar.BottomNavigationBar
 import ufsm.petsi.petservices.ui.products.ProductsScreen
+import ufsm.petsi.petservices.ui.products.ProductsViewModel
 import ufsm.petsi.petservices.ui.signup.SignupScreen
 
 
-@Suppress("UnrememberedGetBackStackEntry")
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -58,11 +59,8 @@ fun AppNavigation() {
             composable<LoginRoute> {
                 LoginScreen(
                     onNavigateToHome = {
-                        navController.navigate(MainGraph(it.idUser)) {
-                            popUpTo<LoginRoute> {
-                                inclusive = true
-                            }
-                        }
+                        navController.popBackStack()
+                        navController.navigate(HomeRoute)
                     },
                     onNavigateToSignup = {
                         navController.navigate(SignupRoute)
@@ -77,14 +75,10 @@ fun AppNavigation() {
 
             navigation<MainGraph>(startDestination = HomeRoute) {
                 composable<HomeRoute> {
-                    val parentEntry = remember(it) { navController.getBackStackEntry<MainGraph>() }
-                    val mainArgs = parentEntry.toRoute<MainGraph>()
-                    HomeScreen(mainArgs.userId)
+                    HomeScreen()
                 }
                 composable<ProductRoute> {
-                    val parentEntry = remember(it) { navController.getBackStackEntry<MainGraph>() }
-                    val mainArgs = parentEntry.toRoute<MainGraph>()
-                    ProductsScreen(mainArgs.userId)
+                    ProductsScreen()
                 }
             }
 

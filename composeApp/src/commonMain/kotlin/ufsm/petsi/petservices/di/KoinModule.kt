@@ -10,19 +10,23 @@ import ufsm.petsi.petservices.database.AppDatabase
 import ufsm.petsi.petservices.database.DriverFactory
 import ufsm.petsi.petservices.repository.implementations.ProductRepository
 import ufsm.petsi.petservices.repository.implementations.UserRepository
+import ufsm.petsi.petservices.session.SessionManager
 import ufsm.petsi.petservices.ui.login.LoginViewModel
+import ufsm.petsi.petservices.ui.products.ProductsViewModel
 import ufsm.petsi.petservices.ui.signup.SignupViewModel
 
 expect val targetModule: Module
 
 val sharedModule = module {
     single<SqlDriver> { get<DriverFactory>().createDriver() }
+    single<SessionManager> { SessionManager() }
     single<AppDatabase> { AppDatabase(get()) }
     single<UserRepository> { UserRepository(get()) }
     single<ProductRepository> { ProductRepository(get()) }
 
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)
+    viewModelOf(::ProductsViewModel)
 }
 
 fun initializeKoin(config: (KoinApplication.() -> Unit)? = null) {

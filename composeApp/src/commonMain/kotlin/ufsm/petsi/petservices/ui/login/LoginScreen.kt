@@ -35,18 +35,19 @@ import androidx.compose.ui.unit.sp
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.models.User
 import ufsm.petsi.petservices.ui.components.DefaultTextField
+import ufsm.petsi.petservices.ui.products.ProductsIntent
 
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = koinViewModel(),
-    onNavigateToHome: (User) -> Unit,
+    onNavigateToHome: () -> Unit,
     onNavigateToSignup: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is LoginEffect.NavigateToHome -> onNavigateToHome(effect.user)
+                is LoginEffect.NavigateToHome -> onNavigateToHome()
                 is LoginEffect.NavigateToSignup -> onNavigateToSignup()
                 is LoginEffect.ShowToast -> {}
             }

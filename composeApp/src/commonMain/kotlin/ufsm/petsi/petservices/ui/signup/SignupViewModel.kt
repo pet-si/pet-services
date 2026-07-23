@@ -68,7 +68,6 @@ class SignupViewModel(private val repository: UserRepository) : ViewModel() {
         )
 
         when (val result = repository.insertUser(user)) {
-            DataResult.Default -> TODO()
             is DataResult.Error -> {
                 _state.update { it.copy(signupError = result.message) }
             }

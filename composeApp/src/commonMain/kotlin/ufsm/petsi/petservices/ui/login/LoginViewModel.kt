@@ -7,12 +7,13 @@ import kotlinx.coroutines.launch
 import ufsm.petsi.petservices.models.User
 import ufsm.petsi.petservices.repository.DataResult
 import ufsm.petsi.petservices.repository.implementations.UserRepository
+import ufsm.petsi.petservices.session.SessionManager
 import ufsm.petsi.petservices.util.hash
 import java.security.MessageDigest
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class LoginViewModel(private val repository: UserRepository) : ViewModel() {
+class LoginViewModel(private val repository: UserRepository, private val sessionManager: SessionManager) : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     var state = _state.asStateFlow()
 
@@ -47,7 +48,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         val hashedPassword = hash(_state.value.password)
 
         when (val result = repository.loginUser(_state.value.email, hashedPassword)) {
-            DataResult.Default -> {}
             is DataResult.Error -> {
                 _state.update { it.copy(isLoading = false, errorMessage = result.message) }
             }
@@ -55,7 +55,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 _state.update { it.copy(isLoading = true) }
             }
             is DataResult.Success -> {
-                _effect.emit(LoginEffect.NavigateToHome(result.data))
+                _effect.emit(LoginEffect.NavigateToHome)
+                sessionManager.loginUser(result.data.idUser)
             }
         }
     }
