@@ -1,13 +1,14 @@
 package ufsm.petsi.petservices.models
 
 import kotlinx.serialization.Serializable
+import java.util.UUID
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @Serializable
 data class Expense @OptIn(ExperimentalTime::class) constructor(
-    val idExpense: String,
+    val idExpense: String = UUID.randomUUID().toString(),
     val name: String,
     val amount: Double,
     val date: String,

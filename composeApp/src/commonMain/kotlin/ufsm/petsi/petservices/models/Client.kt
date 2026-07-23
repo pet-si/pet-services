@@ -1,13 +1,14 @@
 package ufsm.petsi.petservices.models
 
 import kotlinx.serialization.Serializable
+import java.util.UUID
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @Serializable
 data class Client @OptIn(ExperimentalTime::class) constructor(
-    val idClient: String,
+    val idClient: String = UUID.randomUUID().toString(),
     val name: String,
     val cpf: String? = null,
     val email: String? = null,
