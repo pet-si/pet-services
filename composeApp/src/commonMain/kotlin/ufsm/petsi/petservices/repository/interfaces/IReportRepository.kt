@@ -6,8 +6,8 @@ import ufsm.petsi.petservices.models.Report
 import ufsm.petsi.petservices.repository.DataResult
 
 interface IReportRepository {
-    fun getReportById(id: String) : DataResult<Report>
-    fun getAllReports() : Flow<DataResult<List<Report>>>
+    fun getReportById(id: String, idUser: String) : DataResult<Report>
+    fun getAllReports(idUser: String) : Flow<DataResult<List<Report>>>
     suspend fun insertReport(report: Report) : DataResult<Boolean>
     suspend fun updateReport(report: Report) : DataResult<Boolean>
     suspend fun deleteReport(report: Report) : DataResult<Boolean>

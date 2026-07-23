@@ -9,6 +9,7 @@ import kotlin.time.Instant
 data class ProductMaterial @OptIn(ExperimentalTime::class) constructor(
     val idProduct: String,
     val idMaterial: String,
+    val idUser: String,
     val quantity: Double,
     val updatedAt: Instant = Clock.System.now(),
     val deleted: Boolean = false

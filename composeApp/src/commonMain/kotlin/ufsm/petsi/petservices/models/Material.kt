@@ -8,6 +8,7 @@ import kotlin.time.Instant
 @Serializable
 data class Material @OptIn(ExperimentalTime::class) constructor(
     val idMaterial: String,
+    val idUser: String,
     val name: String,
     val quantity: Int = 0,
     val costPrice: Double,

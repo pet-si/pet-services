@@ -11,45 +11,44 @@ WHERE idUser = ? AND deleted = 0;
 updateReport:
 UPDATE reportEntity
 SET filePath = ?, date = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idReport = ? AND deleted = 0;
+WHERE idReport = ? AND idUser = ? AND deleted = 0;
 
 updateExpense:
 UPDATE expenseEntity
 SET name = ?, amount = ?, date = ?, category = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idExpense = ? AND deleted = 0;
+WHERE idExpense = ? AND idUser = ? AND deleted = 0;
 
 updateClient:
 UPDATE clientEntity
 SET name = ?, cpf = ?, email = ?, phoneNumber = ?, points = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idClient = ? AND deleted = 0;
+WHERE idClient = ? AND idUser = ? AND deleted = 0;
 
 updatePurchaseOrder:
 UPDATE purchaseOrderEntity
 SET idClient = ?, date = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idPurchaseOrder = ? AND deleted = 0;
+WHERE idPurchaseOrder = ? AND idUser = ? AND deleted = 0;
 
 updateProduct:
 UPDATE productEntity
 SET name = ?, quantity = ?, costPrice = ?, salePrice = ?, minimumStock = ?, soldQuantity = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idProduct = ? AND deleted = 0;
+WHERE idProduct = ? AND idUser = ? AND deleted = 0;
 
 updateMaterial:
 UPDATE materialEntity
 SET name = ?, quantity = ?, costPrice = ?, minimumStock = ?, metric = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idMaterial = ? AND deleted = 0;
+WHERE idMaterial = ? AND idUser = ? AND deleted = 0;
 
 updateProductMaterial:
 UPDATE productMaterialsEntity
 SET quantity = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idProduct = ? AND idMaterial = ? AND deleted = 0;
+WHERE idProduct = ? AND idMaterial = ? AND idUser = ? AND deleted = 0;
 
 updatePurchaseOrderProduct:
 UPDATE purchaseOrderProductsEntity
 SET quantity = ?, updatedAt = CURRENT_TIMESTAMP
-WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;
+WHERE idPurchaseOrder = ? AND idProduct = ? AND idUser = ? AND deleted = 0;
 
 updateSetting:
 UPDATE settingsEntity
 SET value = ?
 WHERE settingName = ?;
-

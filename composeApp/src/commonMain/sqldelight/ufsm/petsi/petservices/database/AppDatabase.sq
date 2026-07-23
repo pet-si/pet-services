@@ -12,10 +12,13 @@ CREATE TABLE IF NOT EXISTS userEntity (
 
 CREATE TABLE IF NOT EXISTS reportEntity (
     idReport TEXT PRIMARY KEY NOT NULL,
+    idUser TEXT NOT NULL,
     filePath TEXT NOT NULL,
     date TEXT NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser)
 );
 
 CREATE TABLE IF NOT EXISTS settingsEntity (
@@ -29,37 +32,46 @@ CREATE TABLE IF NOT EXISTS sincronizationEntity (
 
 CREATE TABLE IF NOT EXISTS expenseEntity (
     idExpense TEXT PRIMARY KEY NOT NULL,
+    idUser TEXT NOT NULL,
     name TEXT NOT NULL,
     amount REAL NOT NULL,
     date TEXT NOT NULL,
     category TEXT NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser)
 );
 
 CREATE TABLE IF NOT EXISTS clientEntity (
     idClient TEXT PRIMARY KEY NOT NULL,
+    idUser TEXT NOT NULL,
     name TEXT NOT NULL,
     cpf TEXT UNIQUE,
     email TEXT  UNIQUE,
     phoneNumber TEXT,
     points INTEGER DEFAULT 0,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser)
 );
 
 CREATE TABLE IF NOT EXISTS purchaseOrderEntity (
     idPurchaseOrder TEXT PRIMARY KEY NOT NULL,
+    idUser TEXT NOT NULL,
     idClient TEXT NOT NULL,
     date TEXT NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser),
     FOREIGN KEY (idClient) REFERENCES clientEntity(idClient)
 );
 
 CREATE TABLE IF NOT EXISTS productEntity (
     idProduct TEXT PRIMARY KEY NOT NULL,
+    idUser TEXT NOT NULL,
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
@@ -67,40 +79,49 @@ CREATE TABLE IF NOT EXISTS productEntity (
     minimumStock INTEGER DEFAULT 0,
     soldQuantity INTEGER DEFAULT 0,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser)
 );
 
 CREATE TABLE IF NOT EXISTS purchaseOrderProductsEntity (
     idPurchaseOrder TEXT NOT NULL,
     idProduct TEXT NOT NULL,
+    idUser TEXT NOT NULL,
     quantity INTEGER DEFAULT 1,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     PRIMARY KEY (idPurchaseOrder, idProduct),
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser),
     FOREIGN KEY (idPurchaseOrder) REFERENCES purchaseOrderEntity(idPurchaseOrder),
     FOREIGN KEY (idProduct) REFERENCES productEntity(idProduct)
 );
 
 CREATE TABLE IF NOT EXISTS materialEntity (
     idMaterial TEXT PRIMARY KEY NOT NULL,
+    idUser TEXT NOT NULL,
     name TEXT NOT NULL,
     quantity INTEGER DEFAULT 0,
     costPrice REAL NOT NULL,
     minimumStock INTEGER DEFAULT 0,
     metric TEXT NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted INTEGER AS Boolean NOT NULL DEFAULT 0
+    deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser)
 );
 
 CREATE TABLE IF NOT EXISTS productMaterialsEntity (
     idProduct TEXT NOT NULL,
     idMaterial TEXT NOT NULL,
+    idUser TEXT NOT NULL,
     quantity REAL NOT NULL,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted INTEGER AS Boolean NOT NULL DEFAULT 0,
 
     PRIMARY KEY (idProduct, idMaterial),
+    FOREIGN KEY (idUser) REFERENCES userEntity(idUser),
     FOREIGN KEY (idProduct) REFERENCES productEntity(idProduct),
     FOREIGN KEY (idMaterial) REFERENCES materialEntity(idMaterial)
 );

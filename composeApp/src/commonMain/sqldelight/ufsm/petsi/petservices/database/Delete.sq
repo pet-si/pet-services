@@ -4,39 +4,39 @@ WHERE idUser = ?;
 
 softDeleteReport:
 UPDATE reportEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idReport = ?;
+WHERE idReport = ? AND idUser = ?;
 
 softDeleteExpense:
 UPDATE expenseEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idExpense = ?;
+WHERE idExpense = ? AND idUser = ?;
 
 softDeleteClient:
 UPDATE clientEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idClient = ?;
+WHERE idClient = ? AND idUser = ?;
 
 softDeletePurchaseOrder:
 UPDATE purchaseOrderEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idPurchaseOrder = ?;
+WHERE idPurchaseOrder = ? AND idUser = ?;
 
 softDeleteProduct:
 UPDATE productEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idProduct = ?;
+WHERE idProduct = ? AND idUser = ?;
 
 softDeleteMaterial:
 UPDATE materialEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idMaterial = ?;
+WHERE idMaterial = ? AND idUser = ?;
 
 softDeleteProductMaterial:
 UPDATE productMaterialsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idProduct = ? AND idMaterial = ?;
+WHERE idProduct = ? AND idMaterial = ? AND idUser = ?;
 
 softDeleteAllProductMaterials:
 UPDATE productMaterialsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idProduct = ?;
+WHERE idProduct = ? AND idUser = ?;
 
 softDeletePurchaseOrderProduct:
 UPDATE purchaseOrderProductsEntity SET deleted = 1, updatedAt = CURRENT_TIMESTAMP
-WHERE idPurchaseOrder = ? AND idProduct = ?;
+WHERE idPurchaseOrder = ? AND idProduct = ? AND idUser = ?;
 
 deleteSetting:
 DELETE FROM settingsEntity

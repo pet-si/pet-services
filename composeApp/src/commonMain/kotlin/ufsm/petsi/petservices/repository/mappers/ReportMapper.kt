@@ -8,6 +8,7 @@ import kotlin.time.ExperimentalTime
 fun ReportEntity.toModel(): Report {
     return Report(
         idReport = idReport,
+        idUser = idUser,
         filePath =  filePath,
         date = date,
         updatedAt = mapEntityDate(updatedAt),

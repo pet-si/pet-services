@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import ufsm.petsi.petservices.database.AppDatabase
-import ufsm.petsi.petservices.database.ProductEntity
 import ufsm.petsi.petservices.models.Product
+import ufsm.petsi.petservices.models.ProductMaterial
 import ufsm.petsi.petservices.repository.DataResult
 import ufsm.petsi.petservices.repository.UNKNOWN_ERROR
 import ufsm.petsi.petservices.repository.interfaces.IProductRepository
-import ufsm.petsi.petservices.repository.mappers.toModel
+import ufsm.petsi.petservices.repository.mappers.mapEntityDate
 import ufsm.petsi.petservices.repository.notFoundError
 import kotlin.time.ExperimentalTime
 
@@ -23,14 +23,38 @@ class ProductRepository(private val database: AppDatabase) : IProductRepository 
     private val updateQueries = database.updateQueries
     private val deleteQueries = database.deleteQueries
 
-    override fun getProductById(id: String): DataResult<Product> {
+    override fun getProductById(id: String, idUser: String): DataResult<Product> {
         return try {
-            val productEntity = selectQueries.selectProductById(id).executeAsOneOrNull()
-            if (productEntity != null) {
-                val materials = selectQueries.selectMaterialsByProductId(id)
-                    .executeAsList()
-                    .map { it.toModel() }
-                DataResult.Success(productEntity.toModel().copy(materials = materials))
+            val rows = selectQueries.selectProductWithMaterialsById(idUser, id, idUser).executeAsList()
+            if (rows.isNotEmpty()) {
+                val first = rows.first()
+                val materials = rows.mapNotNull { row ->
+                    row.pm_idMaterial?.let {
+                        ProductMaterial(
+                            idProduct = first.idProduct,
+                            idMaterial = it,
+                            idUser = row.pm_idUser!!,
+                            quantity = row.pm_quantity!!,
+                            updatedAt = mapEntityDate(row.pm_updatedAt!!),
+                            deleted = row.pm_deleted ?: false
+                        )
+                    }
+                }
+                DataResult.Success(
+                    Product(
+                        idProduct = first.idProduct,
+                        idUser = first.idUser,
+                        name = first.name,
+                        quantity = first.quantity,
+                        costPrice = first.costPrice,
+                        salePrice = first.salePrice,
+                        minimumStock = first.minimumStock!!.toInt(),
+                        soldQuantity = first.soldQuantity!!.toInt(),
+                        materials = materials,
+                        updatedAt = mapEntityDate(first.updatedAt),
+                        deleted = first.deleted
+                    )
+                )
             } else {
                 DataResult.Error(notFoundError("Produto"))
             }
@@ -39,17 +63,40 @@ class ProductRepository(private val database: AppDatabase) : IProductRepository 
         }
     }
 
-    override fun getAllProducts(): Flow<DataResult<List<Product>>> {
-        return selectQueries.selectAllProducts()
+    override fun getAllProducts(idUser: String): Flow<DataResult<List<Product>>> {
+        return selectQueries.selectAllProductsWithMaterials(idUser, idUser)
             .asFlow()
             .mapToList(Dispatchers.IO)
-            .map<List<ProductEntity>, DataResult<List<Product>>> { list ->
-                DataResult.Success(list.map { entity ->
-                    val materials = selectQueries.selectMaterialsByProductId(entity.idProduct)
-                        .executeAsList()
-                        .map { it.toModel() }
-                    entity.toModel().copy(materials = materials)
-                })
+            .map { rows ->
+                val products = rows.groupBy { it.idProduct }.map { (productId, group) ->
+                    val first = group.first()
+                    val materials = group.mapNotNull { row ->
+                        row.pm_idMaterial?.let {
+                            ProductMaterial(
+                                idProduct = productId,
+                                idMaterial = it,
+                                idUser = row.pm_idUser!!,
+                                quantity = row.pm_quantity!!,
+                                updatedAt = mapEntityDate(row.pm_updatedAt!!),
+                                deleted = row.pm_deleted ?: false
+                            )
+                        }
+                    }
+                    Product(
+                        idProduct = first.idProduct,
+                        idUser = first.idUser,
+                        name = first.name,
+                        quantity = first.quantity,
+                        costPrice = first.costPrice,
+                        salePrice = first.salePrice,
+                        minimumStock = first.minimumStock!!.toInt(),
+                        soldQuantity = first.soldQuantity!!.toInt(),
+                        materials = materials,
+                        updatedAt = mapEntityDate(first.updatedAt),
+                        deleted = first.deleted
+                    )
+                }
+                DataResult.Success(products)
             }
             .catch { e -> emit(DataResult.Error(e.message ?: UNKNOWN_ERROR)) }
     }
@@ -59,6 +106,7 @@ class ProductRepository(private val database: AppDatabase) : IProductRepository 
             database.transaction {
                 insertQueries.insertProduct(
                     idProduct = product.idProduct,
+                    idUser = product.idUser,
                     name = product.name,
                     quantity = product.quantity,
                     costPrice = product.costPrice,
@@ -70,6 +118,7 @@ class ProductRepository(private val database: AppDatabase) : IProductRepository 
                     insertQueries.insertProductMaterial(
                         idProduct = product.idProduct,
                         idMaterial = pm.idMaterial,
+                        idUser = product.idUser,
                         quantity = pm.quantity
                     )
                 }
@@ -91,14 +140,16 @@ class ProductRepository(private val database: AppDatabase) : IProductRepository 
                     minimumStock = product.minimumStock.toLong(),
                     soldQuantity = product.soldQuantity.toLong(),
                     idProduct = product.idProduct,
+                    idUser = product.idUser,
                 )
 
-                deleteQueries.softDeleteAllProductMaterials(product.idProduct)
+                deleteQueries.softDeleteAllProductMaterials(product.idProduct, product.idUser)
 
                 product.materials.forEach { pm ->
                     insertQueries.insertProductMaterial(
                         idProduct = product.idProduct,
                         idMaterial = pm.idMaterial,
+                        idUser = product.idUser,
                         quantity = pm.quantity
                     )
                 }
@@ -109,9 +160,9 @@ class ProductRepository(private val database: AppDatabase) : IProductRepository 
         }
     }
 
-    override suspend fun deleteProduct(id: String) : DataResult<Boolean> {
+    override suspend fun deleteProduct(id: String, idUser: String) : DataResult<Boolean> {
         return try {
-            deleteQueries.softDeleteProduct(id)
+            deleteQueries.softDeleteProduct(id, idUser)
             DataResult.Success(true)
         } catch (e: Exception) {
             DataResult.Error(e.message ?: UNKNOWN_ERROR)

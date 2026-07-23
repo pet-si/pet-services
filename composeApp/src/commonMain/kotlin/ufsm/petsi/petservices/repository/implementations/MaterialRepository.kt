@@ -21,9 +21,9 @@ class MaterialRepository(database: AppDatabase) : IMaterialRepository {
     private val updateQueries = database.updateQueries
     private val deleteQueries = database.deleteQueries
 
-    override fun getMaterialById(id: String): DataResult<Material> {
+    override fun getMaterialById(id: String, idUser: String): DataResult<Material> {
         return try {
-            val material = selectQueries.selectMaterialById(id).executeAsOneOrNull()?.toModel()
+            val material = selectQueries.selectMaterialById(id, idUser).executeAsOneOrNull()?.toModel()
             if (material != null) {
                 DataResult.Success(material)
             } else {
@@ -34,8 +34,8 @@ class MaterialRepository(database: AppDatabase) : IMaterialRepository {
         }
     }
 
-    override fun getAllMaterials(): Flow<DataResult<List<Material>>> {
-        return selectQueries.selectAllMaterials()
+    override fun getAllMaterials(idUser: String): Flow<DataResult<List<Material>>> {
+        return selectQueries.selectAllMaterials(idUser)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map<List<MaterialEntity>, DataResult<List<Material>>> { list -> DataResult.Success(list.map { it.toModel() }) }
@@ -46,6 +46,7 @@ class MaterialRepository(database: AppDatabase) : IMaterialRepository {
         return try {
             insertQueries.insertMaterial(
                 idMaterial = material.idMaterial,
+                idUser = material.idUser,
                 name = material.name,
                 quantity = material.quantity.toLong(),
                 costPrice = material.costPrice,
@@ -67,6 +68,7 @@ class MaterialRepository(database: AppDatabase) : IMaterialRepository {
                 minimumStock = material.minimumStock.toLong(),
                 metric = material.metric,
                 idMaterial = material.idMaterial,
+                idUser = material.idUser,
             )
             DataResult.Success(true)
         } catch (e: Exception) {
@@ -74,13 +76,12 @@ class MaterialRepository(database: AppDatabase) : IMaterialRepository {
         }
     }
 
-    override suspend fun deleteMaterial(id: String) : DataResult<Boolean> {
+    override suspend fun deleteMaterial(id: String, idUser: String) : DataResult<Boolean> {
         return try {
-            deleteQueries.softDeleteMaterial(id)
+            deleteQueries.softDeleteMaterial(id, idUser)
             DataResult.Success(true)
         } catch (e: Exception) {
             DataResult.Error(e.message ?: UNKNOWN_ERROR)
         }
     }
 }
-

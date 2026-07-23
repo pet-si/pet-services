@@ -25,9 +25,9 @@ class ReportRepository(database: AppDatabase) : IReportRepository {
     private val updateQueries = database.updateQueries
     private val deleteQueries = database.deleteQueries
 
-    override fun getReportById(id: String): DataResult<Report> {
+    override fun getReportById(id: String, idUser: String): DataResult<Report> {
         return try {
-            val report = selectQueries.selectReportById(id).executeAsOneOrNull()?.toModel()
+            val report = selectQueries.selectReportById(id, idUser).executeAsOneOrNull()?.toModel()
             if (report != null) {
                 DataResult.Success(report)
             } else {
@@ -38,8 +38,8 @@ class ReportRepository(database: AppDatabase) : IReportRepository {
         }
     }
 
-    override fun getAllReports(): Flow<DataResult<List<Report>>> {
-        return selectQueries.selectAllReports()
+    override fun getAllReports(idUser: String): Flow<DataResult<List<Report>>> {
+        return selectQueries.selectAllReports(idUser)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map<List<ReportEntity>, DataResult<List<Report>>> { list -> DataResult.Success(list.map { it.toModel() }) }
@@ -50,6 +50,7 @@ class ReportRepository(database: AppDatabase) : IReportRepository {
         return try {
             insertQueries.insertReport(
                 idReport = report.idReport,
+                idUser = report.idUser,
                 filePath = report.filePath,
                 date = report.date
             )
@@ -64,7 +65,8 @@ class ReportRepository(database: AppDatabase) : IReportRepository {
             updateQueries.updateReport(
                 filePath = report.filePath,
                 date = report.date,
-                idReport = report.idReport
+                idReport = report.idReport,
+                idUser = report.idUser
             )
             DataResult.Success(true)
         } catch (e: Exception) {
@@ -74,7 +76,7 @@ class ReportRepository(database: AppDatabase) : IReportRepository {
 
     override suspend fun deleteReport(report: Report) : DataResult<Boolean> {
         return try {
-            deleteQueries.softDeleteReport(report.idReport)
+            deleteQueries.softDeleteReport(report.idReport, report.idUser)
             DataResult.Success(true)
         } catch (e: Exception) {
             DataResult.Error(e.message ?: UNKNOWN_ERROR)

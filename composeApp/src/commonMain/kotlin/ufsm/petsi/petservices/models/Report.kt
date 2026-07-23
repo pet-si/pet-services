@@ -7,6 +7,7 @@ import kotlin.time.Instant
 
 data class Report @OptIn(ExperimentalTime::class) constructor(
     val idReport: String = UUID.randomUUID().toString(),
+    val idUser: String,
     val filePath: String,
     val date: String,
     val updatedAt: Instant = Clock.System.now(),

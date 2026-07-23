@@ -5,9 +5,9 @@ import ufsm.petsi.petservices.models.Product
 import ufsm.petsi.petservices.repository.DataResult
 
 interface IProductRepository {
-    fun getProductById(id: String): DataResult<Product>
-    fun getAllProducts(): Flow<DataResult<List<Product>>>
+    fun getProductById(id: String, idUser: String): DataResult<Product>
+    fun getAllProducts(idUser: String): Flow<DataResult<List<Product>>>
     suspend fun insertProduct(product: Product) : DataResult<Boolean>
     suspend fun updateProduct(product: Product) : DataResult<Boolean>
-    suspend fun deleteProduct(id: String) : DataResult<Boolean>
+    suspend fun deleteProduct(id: String, idUser: String) : DataResult<Boolean>
 }

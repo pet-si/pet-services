@@ -9,6 +9,7 @@ fun ProductMaterialsEntity.toModel(): ProductMaterial {
     return ProductMaterial(
         idProduct = idProduct,
         idMaterial = idMaterial,
+        idUser = idUser,
         quantity = quantity,
         updatedAt = mapEntityDate(updatedAt),
         deleted = deleted

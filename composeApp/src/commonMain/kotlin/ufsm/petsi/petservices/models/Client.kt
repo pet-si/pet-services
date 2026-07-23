@@ -8,6 +8,7 @@ import kotlin.time.Instant
 @Serializable
 data class Client @OptIn(ExperimentalTime::class) constructor(
     val idClient: String,
+    val idUser: String,
     val name: String,
     val cpf: String? = null,
     val email: String? = null,

@@ -8,6 +8,7 @@ import kotlin.time.ExperimentalTime
 fun MaterialEntity.toModel(): Material {
     return Material(
         idMaterial = idMaterial,
+        idUser = idUser,
         name = name,
         quantity = quantity!!.toInt(),
         costPrice = costPrice,
