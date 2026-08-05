@@ -15,4 +15,5 @@ data class ProductsState(
 
 sealed interface ProductsEffects {
     data class NavigateToProductDetails(val productId: String) : ProductsEffects
+    data object NavigateToProductCreation : ProductsEffects
 }

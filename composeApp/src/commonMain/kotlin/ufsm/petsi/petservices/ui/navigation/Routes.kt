@@ -16,3 +16,6 @@ data object HomeRoute
 
 @Serializable
 data object ProductRoute
+
+@Serializable
+data class CreateProductRoute(val productId : String? = null)

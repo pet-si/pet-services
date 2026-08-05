@@ -19,6 +19,7 @@ import ufsm.petsi.petservices.ui.login.LoginScreen
 import ufsm.petsi.petservices.ui.navigation.navigationBar.BottomNavigationBar
 import ufsm.petsi.petservices.ui.products.ProductsScreen
 import ufsm.petsi.petservices.ui.products.ProductsViewModel
+import ufsm.petsi.petservices.ui.products.create.CreateProductScreen
 import ufsm.petsi.petservices.ui.signup.SignupScreen
 
 
@@ -78,7 +79,21 @@ fun AppNavigation() {
                     HomeScreen()
                 }
                 composable<ProductRoute> {
-                    ProductsScreen()
+                    ProductsScreen(
+                        onCreateProduct = {
+                            navController.navigate(CreateProductRoute())
+                        },
+                        onProductSelected = { productId ->
+                            navController.navigate(CreateProductRoute(productId = productId))
+                        }
+                    )
+                }
+
+                composable<CreateProductRoute> {
+                    val productId = it.toRoute<CreateProductRoute>().productId
+                    CreateProductScreen(onNavigateBack = {
+                        navController.popBackStack()
+                    }, productId)
                 }
             }
 

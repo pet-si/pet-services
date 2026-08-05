@@ -8,11 +8,13 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import ufsm.petsi.petservices.database.AppDatabase
 import ufsm.petsi.petservices.database.DriverFactory
+import ufsm.petsi.petservices.repository.implementations.MaterialRepository
 import ufsm.petsi.petservices.repository.implementations.ProductRepository
 import ufsm.petsi.petservices.repository.implementations.UserRepository
 import ufsm.petsi.petservices.session.SessionManager
 import ufsm.petsi.petservices.ui.login.LoginViewModel
 import ufsm.petsi.petservices.ui.products.ProductsViewModel
+import ufsm.petsi.petservices.ui.products.create.CreateProductViewModel
 import ufsm.petsi.petservices.ui.signup.SignupViewModel
 
 expect val targetModule: Module
@@ -23,10 +25,12 @@ val sharedModule = module {
     single<AppDatabase> { AppDatabase(get()) }
     single<UserRepository> { UserRepository(get()) }
     single<ProductRepository> { ProductRepository(get()) }
+    single<MaterialRepository> { MaterialRepository(get()) }
 
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)
     viewModelOf(::ProductsViewModel)
+    viewModelOf(::CreateProductViewModel)
 }
 
 fun initializeKoin(config: (KoinApplication.() -> Unit)? = null) {

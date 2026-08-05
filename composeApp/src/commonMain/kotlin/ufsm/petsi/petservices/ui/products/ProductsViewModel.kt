@@ -40,14 +40,7 @@ class ProductsViewModel(
             }
 
             is ProductsIntent.OnAddProductClick -> {
-                repository.insertProduct(
-                    Product(
-                        idProduct = "teste",
-                        name = "Novo Produto",
-                        costPrice = 2.5,
-                        salePrice = 5.0,
-                    )
-                )
+                _effects.send(ProductsEffects.NavigateToProductCreation)
             }
         }
     }

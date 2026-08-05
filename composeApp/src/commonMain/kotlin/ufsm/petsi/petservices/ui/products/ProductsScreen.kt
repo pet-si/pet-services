@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,9 +28,22 @@ import com.composables.icons.materialicons.outlined.Add
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ProductsScreen() {
+fun ProductsScreen(
+    onCreateProduct: () -> Unit,
+    onProductSelected: (String) -> Unit
+) {
     val viewModel: ProductsViewModel = koinViewModel()
     val uiState = viewModel.uiState.collectAsState().value
+
+    LaunchedEffect(Unit) {
+        viewModel.effects.collect { effects ->
+            when (effects) {
+                is ProductsEffects.NavigateToProductCreation -> onCreateProduct()
+                is ProductsEffects.NavigateToProductDetails -> onProductSelected(effects.productId)
+            }
+        }
+    }
+
     AnimatedContent(
         targetState = uiState.products.isNotEmpty(),
         modifier = Modifier.fillMaxSize()
@@ -47,8 +61,10 @@ fun ProductsScreen() {
                     }
                 }
             } else {
-                Text(text = "Você ainda não possui produtos cadastrados",
-                    modifier = Modifier.padding(top = 32.dp))
+                Text(
+                    text = "Você ainda não possui produtos cadastrados",
+                    modifier = Modifier.padding(top = 32.dp)
+                )
             }
             FloatingActionButton(
                 onClick = {
@@ -56,7 +72,10 @@ fun ProductsScreen() {
                 },
                 modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp)
             ) {
-                Icon(imageVector = MaterialIcons.Outlined.Add, contentDescription = "Adicionar Produto")
+                Icon(
+                    imageVector = MaterialIcons.Outlined.Add,
+                    contentDescription = "Adicionar Produto"
+                )
             }
         }
     }
