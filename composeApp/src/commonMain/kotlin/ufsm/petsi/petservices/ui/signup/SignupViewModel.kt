@@ -114,7 +114,10 @@ class SignupViewModel(private val repository: UserRepository) : ViewModel() {
             validity = false
         }
 
-        if (state.password != state.confirmPassword) {
+        if (state.confirmPassword.isBlank()){
+            confirmPasswordError = "Por favor confirme sua senha"
+            validity = false
+        }else if (state.password != state.confirmPassword) {
             confirmPasswordError = "As senhas não coincidem"
             validity = false
         }

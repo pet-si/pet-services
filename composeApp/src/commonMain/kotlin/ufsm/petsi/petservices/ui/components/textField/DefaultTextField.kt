@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.components
+package ufsm.petsi.petservices.ui.components.textField
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -37,6 +37,7 @@ fun DefaultTextField(
     singleLine: Boolean = true,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
+    prefix: @Composable () -> Unit = {},
     shape: Shape = RoundedCornerShape(12.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -47,6 +48,7 @@ fun DefaultTextField(
         textStyle = textStyle,
         label = label,
         shape = shape,
+        prefix = prefix,
         isError = isError,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,

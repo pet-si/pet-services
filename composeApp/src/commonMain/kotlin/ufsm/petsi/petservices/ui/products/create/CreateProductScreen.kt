@@ -17,10 +17,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
-import ufsm.petsi.petservices.models.Material
-import ufsm.petsi.petservices.ui.components.DefaultTextField
+import ufsm.petsi.petservices.ui.components.textField.DecimalCommaVisualTransformation
+import ufsm.petsi.petservices.ui.components.textField.DefaultTextField
 
 @Composable
 fun CreateProductScreen(
@@ -47,20 +48,33 @@ fun CreateProductScreen(
         ProductForm(onAction = {
             viewModel.handleIntent(it)
         }, state = state.value)
-        FormButtons(modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = 8.dp), onCreate = {
-            viewModel.handleIntent(CreateProductIntent.CreateProduct)
-        }, onCancel = {
-            viewModel.handleIntent(CreateProductIntent.Cancel)
-        })
+        FormButtons(
+            modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            onCreate = {
+                viewModel.handleIntent(CreateProductIntent.CreateProduct)
+            },
+            onCancel = {
+                viewModel.handleIntent(CreateProductIntent.Cancel)
+            })
     }
 }
 
 
 @Composable
-private fun ProductForm(modifier : Modifier = Modifier, onAction: (CreateProductIntent) -> Unit, state: CreateProductState) {
+private fun ProductForm(
+    modifier: Modifier = Modifier,
+    onAction: (CreateProductIntent) -> Unit,
+    state: CreateProductState
+) {
     Column(
         modifier = modifier
     ) {
+        Text(
+            "Adicionar Produto",
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge
+        )
         DefaultTextField(
             label = {
                 Text("Nome do Produto")
@@ -76,29 +90,39 @@ private fun ProductForm(modifier : Modifier = Modifier, onAction: (CreateProduct
             },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            value = state.quantity.toString(), onValueChange = { text ->
-                onAction(CreateProductIntent.QuantityChanged(text.filter { c -> c.isDigit() }
-                    .toLongOrNull() ?: 0L))
+            value = state.quantity, onValueChange = { text ->
+                val cleanInput = text.filter { it.isDigit() }
+                onAction(CreateProductIntent.QuantityChanged(cleanInput))
             })
 
         DefaultTextField(
             label = {
-                Text("Custo de Compra")
+                Text("Valor de Compra")
             },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-            value = state.costPrice.toString(),
-            onValueChange = {
-                onAction(CreateProductIntent.CostPriceChanged(it.toDoubleOrNull() ?: 0.0))
+            prefix = { Text("R$") },
+            value = state.costPrice,
+            visualTransformation = DecimalCommaVisualTransformation(),
+            onValueChange = { text ->
+                val cleanInput = text.filter { it.isDigit() }
+                if (cleanInput.length <= 9) {
+                    onAction(CreateProductIntent.CostPriceChanged(cleanInput))
+                }
             })
 
         DefaultTextField(
             label = {
                 Text("Valor de Venda")
             },
+            prefix = { Text("R$") },
+            visualTransformation = DecimalCommaVisualTransformation(),
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-            value = state.salePrice.toString(),
-            onValueChange = {
-                onAction(CreateProductIntent.SalePriceChanged(it.toDoubleOrNull() ?: 0.0))
+            value = state.salePrice,
+            onValueChange = { input ->
+                val cleanInput = input.filter { it.isDigit() }
+                if (cleanInput.length <= 9) {
+                    onAction(CreateProductIntent.SalePriceChanged(input))
+                }
             })
 
         DefaultTextField(
@@ -106,9 +130,12 @@ private fun ProductForm(modifier : Modifier = Modifier, onAction: (CreateProduct
                 Text("Estoque Mínimo")
             },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-            value = state.minimumStock.toString(),
-            onValueChange = {
-                onAction(CreateProductIntent.MinimumStockChanged(it.toIntOrNull() ?: 0))
+            value = state.minimumStock,
+            onValueChange = { text ->
+                val cleanInput = text.filter { it.isDigit() }
+                if (cleanInput.isNotBlank()) {
+                    onAction(CreateProductIntent.MinimumStockChanged(cleanInput))
+                }
             })
 
 
@@ -138,7 +165,7 @@ private fun FormButtons(modifier: Modifier = Modifier, onCreate: () -> Unit, onC
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Criar")
+            Text("Adicionar")
         }
     }
 }

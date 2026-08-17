@@ -31,23 +31,23 @@ class CreateProductViewModel(
         when (intent) {
             is CreateProductIntent.NameChanged -> {
                 println(intent.name)
-                _state.update { it.copy(name = intent.name) }
+                _state.update { it.copy(name = intent.name, nameError = null) }
             }
 
             is CreateProductIntent.QuantityChanged -> {
-                _state.update { it.copy(quantity = intent.quantity) }
+                _state.update { it.copy(quantity = intent.quantity, quantityError = null) }
             }
 
             is CreateProductIntent.CostPriceChanged -> {
-                _state.update { it.copy(costPrice = intent.costPrice) }
+                _state.update { it.copy(costPrice = intent.costPrice, costPriceError = null) }
             }
 
             is CreateProductIntent.SalePriceChanged -> {
-                _state.update { it.copy(salePrice = intent.salePrice) }
+                _state.update { it.copy(salePrice = intent.salePrice, salePriceError = null) }
             }
 
             is CreateProductIntent.MinimumStockChanged -> {
-                _state.update { it.copy(minimumStock = intent.stock) }
+                _state.update { it.copy(minimumStock = intent.stock, minimumStockError = null) }
             }
 
             is CreateProductIntent.MaterialChanged -> {
@@ -79,10 +79,10 @@ class CreateProductViewModel(
             is DataResult.Success -> {
                 _state.value = _state.value.copy(
                     name = result.data.name,
-                    quantity = result.data.quantity,
-                    costPrice = result.data.costPrice,
-                    salePrice = result.data.salePrice,
-                    minimumStock = result.data.minimumStock,
+                    quantity = result.data.quantity.toString(),
+                    costPrice = result.data.costPrice.toString(),
+                    salePrice = result.data.salePrice.toString(),
+                    minimumStock = result.data.minimumStock.toString(),
                     materials = result.data.materials
                 )
             }
@@ -94,16 +94,17 @@ class CreateProductViewModel(
 
     @OptIn(ExperimentalTime::class)
     fun createProduct() = viewModelScope.launch {
+        validateFields()
         val state = _state.value
         val product = Product(
             name = state.name,
-            quantity = state.quantity,
-            costPrice = state.costPrice,
-            salePrice = state.salePrice,
-            minimumStock = state.minimumStock,
+            quantity = state.quantity.toLong(),
+            costPrice = state.costPrice.toDouble(),
+            salePrice = state.salePrice.toDouble(),
+            minimumStock = state.minimumStock.toInt(),
             materials = state.materials
         )
-        when (val result = productRepo.insertProduct(product)) {
+        when (productRepo.insertProduct(product)) {
             is DataResult.Success -> {
                 _effects.send(CreateProductEffects.NavigateBack)
             }
@@ -111,6 +112,10 @@ class CreateProductViewModel(
             DataResult.Loading -> TODO()
             is DataResult.Error -> TODO()
         }
+    }
+
+    private fun validateFields() {
+        val state = _state.value
     }
 
 }

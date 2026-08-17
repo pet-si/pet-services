@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.compose.viewmodel.koinViewModel
-import ufsm.petsi.petservices.ui.components.DefaultTextField
+import ufsm.petsi.petservices.ui.components.textField.DefaultTextField
 
 @Composable
 fun SignupScreen(
