@@ -15,6 +15,7 @@ import ufsm.petsi.petservices.session.SessionManager
 import ufsm.petsi.petservices.ui.login.LoginViewModel
 import ufsm.petsi.petservices.ui.products.ProductsViewModel
 import ufsm.petsi.petservices.ui.products.create.CreateProductViewModel
+import ufsm.petsi.petservices.ui.products.view.ViewProductViewModel
 import ufsm.petsi.petservices.ui.signup.SignupViewModel
 
 expect val targetModule: Module
@@ -31,6 +32,7 @@ val sharedModule = module {
     viewModelOf(::SignupViewModel)
     viewModelOf(::ProductsViewModel)
     viewModelOf(::CreateProductViewModel)
+    viewModelOf(::ViewProductViewModel)
 }
 
 fun initializeKoin(config: (KoinApplication.() -> Unit)? = null) {
