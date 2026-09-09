@@ -13,6 +13,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
+import ufsm.petsi.petservices.ui.clients.android.AndroidClientsScreen
+import ufsm.petsi.petservices.ui.clients.android.AndroidCreateClientScreen
+import ufsm.petsi.petservices.ui.clients.android.AndroidCreatePedidoScreen
+import ufsm.petsi.petservices.ui.clients.android.AndroidViewClientScreen
+import ufsm.petsi.petservices.ui.clients.desktop.DesktopClientsScreen
 import ufsm.petsi.petservices.ui.home.HomeScreen
 import ufsm.petsi.petservices.ui.login.LoginScreen
 import ufsm.petsi.petservices.ui.navigation.navigationBar.BottomNavigationBar
@@ -41,7 +46,10 @@ fun AppNavigation() {
             route != LoginRoute::class.qualifiedName &&
                     route != SignupRoute::class.qualifiedName &&
                     !route.contains("ViewProductRoute") &&
-                    !route.contains("CreateProductRoute")
+                    !route.contains("CreateProductRoute") &&
+                    !route.contains("ViewClientRoute") &&
+                    !route.contains("CreateClientRoute") &&
+                    !route.contains("CreatePedidoRoute")
         }
 
         Scaffold(
@@ -109,6 +117,40 @@ fun AppNavigation() {
                                 DesktopProductScreen()
                             }
 
+                            composable<ClientRoute> {
+                                DesktopClientsScreen()
+                            }
+
+                            composable<ViewClientRoute> {
+                                val clientId = it.toRoute<ViewClientRoute>().clientId
+                                AndroidViewClientScreen(
+                                    onNavigateBack = { navController.popBackStack() },
+                                    onNavigateToEdit = { id ->
+                                        navController.navigate(CreateClientRoute(clientId = id))
+                                    },
+                                    onAddPedido = { id ->
+                                        navController.navigate(CreatePedidoRoute(clientId = id))
+                                    },
+                                    clientId = clientId
+                                )
+                            }
+
+                            composable<CreateClientRoute> {
+                                val clientId = it.toRoute<CreateClientRoute>().clientId
+                                AndroidCreateClientScreen(
+                                    onNavigateBack = { navController.popBackStack() },
+                                    clientId = clientId
+                                )
+                            }
+
+                            composable<CreatePedidoRoute> {
+                                val clientId = it.toRoute<CreatePedidoRoute>().clientId
+                                AndroidCreatePedidoScreen(
+                                    onNavigateBack = { navController.popBackStack() },
+                                    clientId = clientId
+                                )
+                            }
+
                             composable<ViewProductRoute> {
                                 val productId = it.toRoute<ViewProductRoute>().productId
                                 AndroidViewProductScreen(
@@ -172,6 +214,53 @@ fun AppNavigation() {
                                 onProductEdit = { productId ->
                                     navController.navigate(CreateProductRoute(productId = productId))
                                 }
+                            )
+                        }
+
+                        composable<ClientRoute> {
+                            AndroidClientsScreen(
+                                onCreateClient = {
+                                    navController.navigate(CreateClientRoute())
+                                },
+                                onClientSelected = { clientId ->
+                                    navController.navigate(ViewClientRoute(clientId = clientId))
+                                },
+                                onClientEdit = { clientId ->
+                                    navController.navigate(CreateClientRoute(clientId = clientId))
+                                },
+                                onAddPedido = { clientId ->
+                                    navController.navigate(CreatePedidoRoute(clientId = clientId))
+                                }
+                            )
+                        }
+
+                        composable<ViewClientRoute> {
+                            val clientId = it.toRoute<ViewClientRoute>().clientId
+                            AndroidViewClientScreen(
+                                onNavigateBack = { navController.popBackStack() },
+                                onNavigateToEdit = { id ->
+                                    navController.navigate(CreateClientRoute(clientId = id))
+                                },
+                                onAddPedido = { id ->
+                                    navController.navigate(CreatePedidoRoute(clientId = id))
+                                },
+                                clientId = clientId
+                            )
+                        }
+
+                        composable<CreateClientRoute> {
+                            val clientId = it.toRoute<CreateClientRoute>().clientId
+                            AndroidCreateClientScreen(
+                                onNavigateBack = { navController.popBackStack() },
+                                clientId = clientId
+                            )
+                        }
+
+                        composable<CreatePedidoRoute> {
+                            val clientId = it.toRoute<CreatePedidoRoute>().clientId
+                            AndroidCreatePedidoScreen(
+                                onNavigateBack = { navController.popBackStack() },
+                                clientId = clientId
                             )
                         }
 

@@ -38,6 +38,10 @@ selectAllPurchaseOrders:
 SELECT * FROM purchaseOrderEntity
 WHERE deleted = 0;
 
+selectPurchaseOrdersByClientId:
+SELECT * FROM purchaseOrderEntity
+WHERE idClient = ? AND deleted = 0;
+
 selectProductById:
 SELECT * FROM productEntity
 WHERE idProduct = ? AND deleted = 0;
@@ -69,6 +73,10 @@ WHERE idProduct = ? AND deleted = 0;
 selectPurchaseOrderProductById:
 SELECT * FROM purchaseOrderProductsEntity
 WHERE idPurchaseOrder = ? AND idProduct = ? AND deleted = 0;
+
+selectPurchaseOrderProductsByOrderId:
+SELECT * FROM purchaseOrderProductsEntity
+WHERE idPurchaseOrder = ? AND deleted = 0;
 
 selectAllPurchaseOrderProducts:
 SELECT * FROM purchaseOrderProductsEntity

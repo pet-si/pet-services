@@ -8,10 +8,17 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import ufsm.petsi.petservices.database.AppDatabase
 import ufsm.petsi.petservices.database.DriverFactory
+import ufsm.petsi.petservices.repository.implementations.ClientRepository
 import ufsm.petsi.petservices.repository.implementations.MaterialRepository
 import ufsm.petsi.petservices.repository.implementations.ProductRepository
+import ufsm.petsi.petservices.repository.implementations.PurchaseOrderRepository
 import ufsm.petsi.petservices.repository.implementations.UserRepository
 import ufsm.petsi.petservices.session.SessionManager
+import ufsm.petsi.petservices.ui.clients.ClientsViewModel
+import ufsm.petsi.petservices.ui.clients.create.CreateClientViewModel
+import ufsm.petsi.petservices.ui.clients.pedido.CreatePedidoViewModel
+import ufsm.petsi.petservices.ui.clients.pedido.ViewPedidoViewModel
+import ufsm.petsi.petservices.ui.clients.view.ViewClientViewModel
 import ufsm.petsi.petservices.ui.login.LoginViewModel
 import ufsm.petsi.petservices.ui.products.ProductsViewModel
 import ufsm.petsi.petservices.ui.products.create.CreateProductViewModel
@@ -27,12 +34,19 @@ val sharedModule = module {
     single<UserRepository> { UserRepository(get()) }
     single<ProductRepository> { ProductRepository(get()) }
     single<MaterialRepository> { MaterialRepository(get()) }
+    single<ClientRepository> { ClientRepository(get()) }
+    single<PurchaseOrderRepository> { PurchaseOrderRepository(get()) }
 
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)
     viewModelOf(::ProductsViewModel)
     viewModelOf(::CreateProductViewModel)
     viewModelOf(::ViewProductViewModel)
+    viewModelOf(::ClientsViewModel)
+    viewModelOf(::CreateClientViewModel)
+    viewModelOf(::ViewClientViewModel)
+    viewModelOf(::CreatePedidoViewModel)
+    viewModelOf(::ViewPedidoViewModel)
 }
 
 fun initializeKoin(config: (KoinApplication.() -> Unit)? = null) {

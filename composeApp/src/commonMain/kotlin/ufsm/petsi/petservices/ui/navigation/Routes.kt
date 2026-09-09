@@ -22,3 +22,15 @@ data class CreateProductRoute(val productId : String? = null)
 
 @Serializable
 data class ViewProductRoute(val productId : String)
+
+@Serializable
+data object ClientRoute
+
+@Serializable
+data class CreateClientRoute(val clientId : String? = null)
+
+@Serializable
+data class ViewClientRoute(val clientId : String)
+
+@Serializable
+data class CreatePedidoRoute(val clientId : String)

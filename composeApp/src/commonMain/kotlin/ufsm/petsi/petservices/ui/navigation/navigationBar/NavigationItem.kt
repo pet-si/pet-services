@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.composables.icons.materialicons.MaterialIcons
 import com.composables.icons.materialicons.outlined.Home
 import com.composables.icons.materialicons.outlined.Inventory
+import com.composables.icons.materialicons.outlined.People
+import ufsm.petsi.petservices.ui.navigation.ClientRoute
 import ufsm.petsi.petservices.ui.navigation.HomeRoute
 import ufsm.petsi.petservices.ui.navigation.ProductRoute
 
@@ -21,5 +23,9 @@ val TOP_LEVEL_DESTINATIONS = mapOf(
     ProductRoute to NavigationItem(
         icon = MaterialIcons.Outlined.Inventory,
         label = "Estoque"
+    ),
+    ClientRoute to NavigationItem(
+        icon = MaterialIcons.Outlined.People,
+        label = "Clientes"
     )
 )
