@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.composables.icons.materialicons.MaterialIcons
 import com.composables.icons.materialicons.outlined.Check
@@ -32,11 +33,21 @@ fun MaterialPicker(
     onMaterialSelected: (Material) -> Unit,
     modifier: Modifier = Modifier,
     selectedMaterialId: String? = null,
+    showTitle: Boolean = true,
 ) {
     Column(modifier = modifier) {
+        if (showTitle) {
+            Text(
+                text = "Selecione um material",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                textAlign = TextAlign.Center
+            )
+        }
+
         DefaultTextField(
             label = { Text("Buscar material") },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
             value = searchQuery,
             onValueChange = onSearchQueryChange
         )

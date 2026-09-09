@@ -5,6 +5,7 @@ import ufsm.petsi.petservices.models.Product
 sealed interface ProductsIntent {
     data class OnProductClick(val productId: String) : ProductsIntent
     data class OnProductEdit(val productId: String) : ProductsIntent
+    data class OnProductDuplicate(val productId: String) : ProductsIntent
     data object OnAddProductClick : ProductsIntent
     data class OnProductDelete(val productId: String) : ProductsIntent
     data object ConfirmDeleteProduct : ProductsIntent

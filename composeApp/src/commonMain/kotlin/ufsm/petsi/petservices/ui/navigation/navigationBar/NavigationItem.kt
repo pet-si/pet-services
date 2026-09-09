@@ -3,9 +3,8 @@ package ufsm.petsi.petservices.ui.navigation.navigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.composables.icons.materialicons.MaterialIcons
-import com.composables.icons.materialicons.outlined.Backpack
-import com.composables.icons.materialicons.outlined.Gif_box
 import com.composables.icons.materialicons.outlined.Home
+import com.composables.icons.materialicons.outlined.Inventory
 import ufsm.petsi.petservices.ui.navigation.HomeRoute
 import ufsm.petsi.petservices.ui.navigation.ProductRoute
 
@@ -20,7 +19,7 @@ val TOP_LEVEL_DESTINATIONS = mapOf(
         label = "Início"
     ),
     ProductRoute to NavigationItem(
-        icon = MaterialIcons.Outlined.Backpack,
-        label = "Produtos"
+        icon = MaterialIcons.Outlined.Inventory,
+        label = "Estoque"
     )
 )

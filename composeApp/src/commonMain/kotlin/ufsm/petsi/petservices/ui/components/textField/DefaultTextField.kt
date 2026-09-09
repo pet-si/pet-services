@@ -28,6 +28,7 @@ fun DefaultTextField(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = LocalTextStyle.current,
     label: @Composable (() -> Unit)? = null,
+    placeholder : @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
     errorMessage : String = "",
@@ -38,6 +39,7 @@ fun DefaultTextField(
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
     prefix: @Composable () -> Unit = {},
+    leadingIcon: (@Composable () -> Unit)? = null,
     shape: Shape = RoundedCornerShape(12.dp),
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
@@ -48,7 +50,9 @@ fun DefaultTextField(
         textStyle = textStyle,
         label = label,
         shape = shape,
+        placeholder = placeholder,
         prefix = prefix,
+        leadingIcon = leadingIcon,
         isError = isError,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
@@ -57,14 +61,16 @@ fun DefaultTextField(
         maxLines = maxLines,
         minLines = minLines,
         colors = colors,
-        supportingText = {
-            Column {
-                supportingText?.invoke()
-                Spacer(Modifier.height(2.dp))
-                AnimatedVisibility(isError) {
-                    Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
+        supportingText = if (supportingText != null || isError) {
+            {
+                Column {
+                    supportingText?.invoke()
+                    Spacer(Modifier.height(2.dp))
+                    AnimatedVisibility(isError) {
+                        Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
+                    }
                 }
             }
-        }
+        } else null
     )
 }

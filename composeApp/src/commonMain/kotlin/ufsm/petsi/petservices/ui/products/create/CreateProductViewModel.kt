@@ -136,6 +136,10 @@ class CreateProductViewModel(
         }
     }
 
+    fun resetForCreate() {
+        _state.value = CreateProductState()
+    }
+
     fun getProduct(productId: String) {
         when (val result = productRepo.getProductById(productId)) {
             is DataResult.Success -> {

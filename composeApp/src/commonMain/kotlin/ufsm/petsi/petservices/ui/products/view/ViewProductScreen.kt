@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.models.Material
 import ufsm.petsi.petservices.ui.components.material.MaterialListItem
+import kotlin.time.ExperimentalTime
 
 @Composable
 fun ViewProductScreen(
@@ -95,53 +96,7 @@ fun ViewProductScreen(
     }
 }
 
-@Composable
-fun ViewProductContent(
-    productId: String,
-    onNavigateToEdit: (String) -> Unit,
-) {
-    val viewModel: ViewProductViewModel = koinViewModel()
-    val state = viewModel.state.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(productId) {
-        viewModel.handleIntent(ViewProductIntent.LoadProduct(productId))
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.collectEffects { effect ->
-            when (effect) {
-                ViewProductEffects.NavigateBack -> { /* no-op when embedded */ }
-                is ViewProductEffects.NavigateToEdit -> onNavigateToEdit(effect.productId)
-                is ViewProductEffects.ShowMessage -> {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = effect.message,
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    ViewProductBody(
-        productId = productId,
-        onNavigateToEdit = onNavigateToEdit,
-        onNavigateBack = {},
-        isEmbedded = true,
-        viewModel = viewModel
-    )
-
-    if (state.value.showDeleteDialog) {
-        DeleteConfirmDialog(
-            onConfirm = { viewModel.handleIntent(ViewProductIntent.ConfirmDeleteProduct) },
-            onDismiss = { viewModel.handleIntent(ViewProductIntent.DismissDeleteDialog) }
-        )
-    }
-}
-
+@OptIn(ExperimentalTime::class)
 @Composable
 private fun ViewProductBody(
     productId: String,

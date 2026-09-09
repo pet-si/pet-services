@@ -17,7 +17,7 @@ import ufsm.petsi.petservices.ui.home.HomeScreen
 import ufsm.petsi.petservices.ui.login.LoginScreen
 import ufsm.petsi.petservices.ui.navigation.navigationBar.BottomNavigationBar
 import ufsm.petsi.petservices.ui.navigation.navigationBar.SideNavigationRail
-import ufsm.petsi.petservices.ui.products.DesktopProductLayout
+import ufsm.petsi.petservices.ui.products.ProductScreen
 import ufsm.petsi.petservices.ui.products.ProductsScreen
 import ufsm.petsi.petservices.ui.products.create.CreateProductScreen
 import ufsm.petsi.petservices.ui.products.view.ViewProductScreen
@@ -106,7 +106,7 @@ fun AppNavigation() {
                                 HomeScreen()
                             }
                             composable<ProductRoute> {
-                                DesktopProductLayout()
+                                ProductScreen()
                             }
 
                             composable<ViewProductRoute> {

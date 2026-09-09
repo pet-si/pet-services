@@ -1,19 +1,15 @@
 package ufsm.petsi.petservices.ui.products.create
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -115,76 +111,6 @@ fun CreateProductScreen(
                 state = state.value,
                 onAction = { viewModel.handleIntent(it) }
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CreateProductContent(
-    productId: String?,
-    onNavigateBack: () -> Unit,
-    onNavigateToViewProduct: (String) -> Unit = { },
-) {
-    val viewModel: CreateProductViewModel = koinViewModel()
-    val state = viewModel.state.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(Unit) {
-        viewModel.loadAvailableMaterialsSync()
-        if (productId != null) {
-            viewModel.getProduct(productId)
-        }
-        viewModel.effects.collect {
-            when (it) {
-                CreateProductEffects.NavigateBack -> onNavigateBack()
-                is CreateProductEffects.NavigateToViewProduct -> onNavigateToViewProduct(it.productId)
-                is CreateProductEffects.ShowMessage -> {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = it.message,
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        ProductForm(
-            modifier = Modifier.weight(1f),
-            onAction = { viewModel.handleIntent(it) },
-            state = state.value
-        )
-        FormButtons(
-            modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-            isEditMode = state.value.productId.isNotEmpty(),
-            onCreate = { viewModel.handleIntent(CreateProductIntent.CreateProduct) },
-            onCancel = { viewModel.handleIntent(CreateProductIntent.Cancel) }
-        )
-    }
-
-    if (state.value.openMaterialEditor) {
-        AlertDialog(
-            onDismissRequest = { viewModel.handleIntent(CreateProductIntent.CloseMaterialEditor) },
-            modifier = Modifier.widthIn(max = 500.dp).heightIn(max = 600.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(28.dp))
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                MaterialEditorContent(
-                    state = state.value,
-                    onAction = { viewModel.handleIntent(it) }
-                )
-            }
         }
     }
 }

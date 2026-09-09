@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ufsm.petsi.petservices.repository.DataResult
 import ufsm.petsi.petservices.repository.implementations.ProductRepository
+import ufsm.petsi.petservices.models.Product
 import ufsm.petsi.petservices.session.SessionManager
 import kotlin.time.ExperimentalTime
 
@@ -39,6 +40,11 @@ class ProductsViewModel(
                 _effects.send(ProductsEffects.NavigateToProductEdit(intent.productId))
             }
 
+            is ProductsIntent.OnProductDuplicate -> {
+                val product = _uiState.value.products.find { it.idProduct == intent.productId }
+                product?.let { duplicateProduct(it) }
+            }
+
             is ProductsIntent.OnAddProductClick -> {
                 _effects.send(ProductsEffects.NavigateToProductCreation)
             }
@@ -60,6 +66,23 @@ class ProductsViewModel(
             ProductsIntent.DismissDeleteDialog -> {
                 _uiState.update { it.copy(showDeleteDialog = false, productToDelete = null) }
             }
+        }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    private fun duplicateProduct(product: Product) = viewModelScope.launch {
+        val copy = Product(
+            name = "${product.name} (Cópia)",
+            quantity = product.quantity,
+            costPrice = product.costPrice,
+            salePrice = product.salePrice,
+            minimumStock = product.minimumStock,
+            soldQuantity = product.soldQuantity,
+            materials = product.materials
+        )
+        when (val result = repository.insertProduct(copy)) {
+            is DataResult.Error -> _effects.send(ProductsEffects.NavigateToProductCreation)
+            else -> { /* no-op */ }
         }
     }
 

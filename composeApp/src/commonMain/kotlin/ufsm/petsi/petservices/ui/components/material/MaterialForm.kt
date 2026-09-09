@@ -1,5 +1,6 @@
 package ufsm.petsi.petservices.ui.components.material
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,7 +29,7 @@ fun MaterialForm(
     minimumStockError: String? = null,
     metricError: String? = null,
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         DefaultTextField(
             label = { Text("Nome do Material") },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
@@ -70,6 +71,7 @@ fun MaterialForm(
 
         DefaultTextField(
             label = { Text("Métrica") },
+            placeholder = { Text("Ex: kg, g, unidade...") },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             value = metric,
             onValueChange = onMetricChange,
