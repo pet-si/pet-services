@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products.create
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +18,12 @@ import ufsm.petsi.petservices.ui.components.dialog.ModalPopup
 import ufsm.petsi.petservices.ui.components.material.MaterialForm
 import ufsm.petsi.petservices.ui.components.material.MaterialPicker
 import ufsm.petsi.petservices.ui.components.textField.DefaultTextField
+import ufsm.petsi.petservices.ui.products.create.CreateProductIntent
+import ufsm.petsi.petservices.ui.products.create.CreateProductState
+import ufsm.petsi.petservices.ui.products.create.NewMaterialField
 
 @Composable
-fun MaterialEditorPopup(
+fun DesktopMaterialEditorPopup(
     state: CreateProductState,
     onAction: (CreateProductIntent) -> Unit,
     onDismiss: () -> Unit

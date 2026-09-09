@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products.create
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,9 +22,12 @@ import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.ui.components.dialog.ModalPopup
 import ufsm.petsi.petservices.ui.components.form.ProductFormFields
 import ufsm.petsi.petservices.ui.components.material.MaterialSection
+import ufsm.petsi.petservices.ui.products.create.CreateProductEffects
+import ufsm.petsi.petservices.ui.products.create.CreateProductIntent
+import ufsm.petsi.petservices.ui.products.create.CreateProductViewModel
 
 @Composable
-fun CreateProductPopup(
+fun DesktopCreateProductPopup(
     productId: String?,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
@@ -118,7 +121,7 @@ fun CreateProductPopup(
     }
 
     if (state.openMaterialEditor) {
-        MaterialEditorPopup(
+        DesktopMaterialEditorPopup(
             state = state,
             onAction = { viewModel.handleIntent(it) },
             onDismiss = { viewModel.handleIntent(CreateProductIntent.CloseMaterialEditor) }

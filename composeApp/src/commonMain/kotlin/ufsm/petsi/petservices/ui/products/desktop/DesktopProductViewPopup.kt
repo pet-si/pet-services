@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products.view
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,9 +20,11 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.ui.components.dialog.ModalPopup
 import ufsm.petsi.petservices.ui.components.material.MaterialSection
+import ufsm.petsi.petservices.ui.products.view.ViewProductIntent
+import ufsm.petsi.petservices.ui.products.view.ViewProductViewModel
 
 @Composable
-fun ProductViewPopup(
+fun DesktopProductViewPopup(
     productId: String,
     onDismiss: () -> Unit,
     onEdit: (String) -> Unit

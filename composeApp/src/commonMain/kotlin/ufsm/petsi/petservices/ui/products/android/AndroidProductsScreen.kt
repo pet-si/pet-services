@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products
+package ufsm.petsi.petservices.ui.products.android
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
@@ -39,9 +39,12 @@ import com.composables.icons.materialicons.outlined.Edit
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.models.Product
 import ufsm.petsi.petservices.ui.components.product.ProductListItem
+import ufsm.petsi.petservices.ui.products.ProductsEffects
+import ufsm.petsi.petservices.ui.products.ProductsIntent
+import ufsm.petsi.petservices.ui.products.ProductsViewModel
 
 @Composable
-fun ProductsScreen(
+fun AndroidProductsScreen(
     onCreateProduct: () -> Unit,
     onProductSelected: (String) -> Unit,
     onProductEdit: (String) -> Unit,

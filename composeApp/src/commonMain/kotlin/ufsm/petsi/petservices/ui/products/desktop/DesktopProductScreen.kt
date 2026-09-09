@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,11 +31,11 @@ import com.composables.icons.materialicons.outlined.Search
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.ui.components.dialog.ModalPopup
 import ufsm.petsi.petservices.ui.components.textField.DefaultTextField
-import ufsm.petsi.petservices.ui.products.create.CreateProductPopup
-import ufsm.petsi.petservices.ui.products.view.ProductViewPopup
+import ufsm.petsi.petservices.ui.products.ProductsIntent
+import ufsm.petsi.petservices.ui.products.ProductsViewModel
 
 @Composable
-fun ProductScreen(modifier: Modifier = Modifier) {
+fun DesktopProductScreen(modifier: Modifier = Modifier) {
     val viewModel: ProductsViewModel = koinViewModel()
     val uiState = viewModel.uiState.collectAsState().value
 
@@ -59,7 +59,7 @@ fun ProductScreen(modifier: Modifier = Modifier) {
         ) {
             ScreenHeader()
 
-            ProductMetricsCards(
+            DesktopProductMetricsCards(
                 productCount = uiState.products.size,
                 modifier = Modifier.padding(top = 24.dp)
             )
@@ -74,7 +74,7 @@ fun ProductScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(top = 24.dp)
             )
 
-            ProductTable(
+            DesktopProductTable(
                 products = filteredProducts,
                 contextMenuProductId = contextMenuProductId,
                 onOpenContextMenu = { contextMenuProductId = it },
@@ -96,14 +96,14 @@ fun ProductScreen(modifier: Modifier = Modifier) {
     }
 
     if (showCreatePopup) {
-        CreateProductPopup(
+        DesktopCreateProductPopup(
             productId = editingProductId,
             onDismiss = { showCreatePopup = false }
         )
     }
 
     viewingProductId?.let { productId ->
-        ProductViewPopup(
+        DesktopProductViewPopup(
             productId = productId,
             onDismiss = { viewingProductId = null },
             onEdit = { id ->

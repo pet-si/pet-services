@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products.view
+package ufsm.petsi.petservices.ui.products.android
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,10 +36,13 @@ import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import ufsm.petsi.petservices.models.Material
 import ufsm.petsi.petservices.ui.components.material.MaterialListItem
+import ufsm.petsi.petservices.ui.products.view.ViewProductEffects
+import ufsm.petsi.petservices.ui.products.view.ViewProductIntent
+import ufsm.petsi.petservices.ui.products.view.ViewProductViewModel
 import kotlin.time.ExperimentalTime
 
 @Composable
-fun ViewProductScreen(
+fun AndroidViewProductScreen(
     onNavigateBack: () -> Unit,
     onNavigateToEdit: (String) -> Unit,
     productId: String

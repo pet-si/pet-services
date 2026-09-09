@@ -17,10 +17,10 @@ import ufsm.petsi.petservices.ui.home.HomeScreen
 import ufsm.petsi.petservices.ui.login.LoginScreen
 import ufsm.petsi.petservices.ui.navigation.navigationBar.BottomNavigationBar
 import ufsm.petsi.petservices.ui.navigation.navigationBar.SideNavigationRail
-import ufsm.petsi.petservices.ui.products.ProductScreen
-import ufsm.petsi.petservices.ui.products.ProductsScreen
-import ufsm.petsi.petservices.ui.products.create.CreateProductScreen
-import ufsm.petsi.petservices.ui.products.view.ViewProductScreen
+import ufsm.petsi.petservices.ui.products.android.AndroidCreateProductScreen
+import ufsm.petsi.petservices.ui.products.android.AndroidProductsScreen
+import ufsm.petsi.petservices.ui.products.android.AndroidViewProductScreen
+import ufsm.petsi.petservices.ui.products.desktop.DesktopProductScreen
 import ufsm.petsi.petservices.ui.signup.SignupScreen
 import ufsm.petsi.petservices.ui.util.ProvideWindowSize
 import ufsm.petsi.petservices.ui.util.isDesktopLayout
@@ -106,12 +106,12 @@ fun AppNavigation() {
                                 HomeScreen()
                             }
                             composable<ProductRoute> {
-                                ProductScreen()
+                                DesktopProductScreen()
                             }
 
                             composable<ViewProductRoute> {
                                 val productId = it.toRoute<ViewProductRoute>().productId
-                                ViewProductScreen(
+                                AndroidViewProductScreen(
                                     onNavigateBack = { navController.popBackStack() },
                                     onNavigateToEdit = { id ->
                                         navController.navigate(CreateProductRoute(productId = id))
@@ -122,7 +122,7 @@ fun AppNavigation() {
 
                             composable<CreateProductRoute> {
                                 val productId = it.toRoute<CreateProductRoute>().productId
-                                CreateProductScreen(
+                                AndroidCreateProductScreen(
                                     onNavigateBack = { navController.popBackStack() },
                                     onNavigateToViewProduct = { id ->
                                         navController.popBackStack()
@@ -162,7 +162,7 @@ fun AppNavigation() {
                             HomeScreen()
                         }
                         composable<ProductRoute> {
-                            ProductsScreen(
+                            AndroidProductsScreen(
                                 onCreateProduct = {
                                     navController.navigate(CreateProductRoute())
                                 },
@@ -177,7 +177,7 @@ fun AppNavigation() {
 
                         composable<ViewProductRoute> {
                             val productId = it.toRoute<ViewProductRoute>().productId
-                            ViewProductScreen(
+                            AndroidViewProductScreen(
                                 onNavigateBack = { navController.popBackStack() },
                                 onNavigateToEdit = { id ->
                                     navController.navigate(CreateProductRoute(productId = id))
@@ -188,7 +188,7 @@ fun AppNavigation() {
 
                         composable<CreateProductRoute> {
                             val productId = it.toRoute<CreateProductRoute>().productId
-                            CreateProductScreen(
+                            AndroidCreateProductScreen(
                                 onNavigateBack = { navController.popBackStack() },
                                 onNavigateToViewProduct = { id ->
                                     navController.popBackStack()

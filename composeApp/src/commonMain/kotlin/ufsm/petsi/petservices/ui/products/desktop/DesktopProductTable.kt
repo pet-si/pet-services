@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -62,7 +62,7 @@ private fun RowScope.TableCell(
 }
 
 @Composable
-fun ProductTable(
+fun DesktopProductTable(
     products: List<Product>,
     contextMenuProductId: String?,
     onOpenContextMenu: (String) -> Unit,
@@ -224,7 +224,7 @@ private fun ProductTableRow(
                     modifier = Modifier.size(20.dp)
                 )
             }
-            ProductContextMenu(
+            DesktopProductContextMenu(
                 expanded = isContextMenuOpen,
                 onDismiss = onDismissContextMenu,
                 onEdit = onEdit,

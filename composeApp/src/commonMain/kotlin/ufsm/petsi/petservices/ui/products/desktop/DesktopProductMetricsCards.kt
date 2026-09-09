@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import com.composables.icons.materialicons.MaterialIcons
 import com.composables.icons.materialicons.outlined.Inventory
 
 @Composable
-fun ProductMetricsCards(
+fun DesktopProductMetricsCards(
     productCount: Int,
     modifier: Modifier = Modifier
 ) {

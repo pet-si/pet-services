@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products
+package ufsm.petsi.petservices.ui.products.desktop
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenu
@@ -15,7 +15,7 @@ import com.composables.icons.materialicons.outlined.Delete
 import com.composables.icons.materialicons.outlined.Edit
 
 @Composable
-fun ProductContextMenu(
+fun DesktopProductContextMenu(
     expanded: Boolean,
     onDismiss: () -> Unit,
     onEdit: () -> Unit,

@@ -1,4 +1,4 @@
-package ufsm.petsi.petservices.ui.products.create
+package ufsm.petsi.petservices.ui.products.android
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -45,11 +45,16 @@ import ufsm.petsi.petservices.ui.components.material.MaterialListItem
 import ufsm.petsi.petservices.ui.components.material.MaterialPicker
 import ufsm.petsi.petservices.ui.components.textField.DecimalCommaVisualTransformation
 import ufsm.petsi.petservices.ui.components.textField.DefaultTextField
+import ufsm.petsi.petservices.ui.products.create.CreateProductEffects
+import ufsm.petsi.petservices.ui.products.create.CreateProductIntent
+import ufsm.petsi.petservices.ui.products.create.CreateProductState
+import ufsm.petsi.petservices.ui.products.create.CreateProductViewModel
+import ufsm.petsi.petservices.ui.products.create.NewMaterialField
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateProductScreen(
+fun AndroidCreateProductScreen(
     onNavigateBack: () -> Unit,
     onNavigateToViewProduct: (String) -> Unit = { },
     productId: String? = null
